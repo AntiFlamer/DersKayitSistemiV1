@@ -1,0 +1,84 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="DersKayitAkademikTakip.SiteMaster" %>
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%: Page.Title %> - Üniversite Sistemi</title>
+
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/bundles/modernizr") %>
+    </asp:PlaceHolder>
+    <webopt:bundlereference runat="server" path="~/Content/css" />
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+</head>
+<body>
+    <form runat="server">
+        <!-- SADELEŞTİRİLMİŞ SCRIPTMANAGER -->
+        <asp:ScriptManager runat="server">
+            <Scripts>
+                <asp:ScriptReference Name="MsAjaxBundle" />
+                <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
+                <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
+                <asp:ScriptReference Name="WebFormsBundle" />
+            </Scripts>
+        </asp:ScriptManager>
+
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" runat="server" href="~/">Üniversite Sistemi</a>
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/">Ana Sayfa</a></li>
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/About.aspx">Hakkında</a></li>
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Contact.aspx">İletişim</a></li>
+                    </ul>
+            
+                    <!-- GİRİŞ/DURUM BİLGİSİ -->
+                    <ul class="navbar-nav navbar-right">
+                        <li id="GirisLi" class="nav-item" runat="server">
+                            <a class="nav-link" runat="server" href="~/Account/Login.aspx">Giriş Yap</a>
+                        </li>
+                        <li id="KullaniciLi" class="nav-item" runat="server" visible="false">
+                            <div class="d-flex align-items-center" style="gap: 15px;">
+                                <span class="navbar-text text-light">
+                                    <i class="fas fa-user"></i> <span id="KullaniciAdi" runat="server"></span>
+                                </span>
+            
+                                <!-- PANEL BUTONU SADECE ADMIN İÇİN -->
+                                <asp:Panel ID="PanelButon" runat="server" Visible="false">
+                                    <a class="btn btn-outline-light btn-sm" runat="server" href="~/Admin/Default.aspx">
+                                        <i class="fas fa-tachometer-alt"></i> Panel
+                                    </a>
+                                </asp:Panel>
+            
+                                <a class="btn btn-outline-warning btn-sm" runat="server" href="~/Account/Logout.aspx">
+                                    <i class="fas fa-sign-out-alt"></i> Çıkış
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container body-content">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+            </asp:ContentPlaceHolder>
+            <hr />
+            <footer>
+                <p>&copy; <%: DateTime.Now.Year %> - Üniversite Ders Kayıt Sistemi</p>
+            </footer>
+        </div>
+    </form>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js"></script>
+</body>
+</html>
