@@ -265,7 +265,7 @@ namespace DersKayitAkademikTakip.Admin
             }
 
             // Modal'ı göster
-            ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "showEditUserModal();", true);
+            ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "window.shouldShowUserEditModal = true; showEditUserModal();", true);
         }
 
         protected void btnKullaniciGuncelle_Click(object sender, EventArgs e)

@@ -92,8 +92,10 @@
     </div>
 
     <!-- DÜZENLEME MODAL -->
-    <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog modal-lg">
+            <asp:UpdatePanel ID="upEditUserModal" runat="server" UpdateMode="Conditional">
+                <ContentTemplate>
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="editUserModalLabel">Kullanıcı Düzenle</h5>
@@ -153,13 +155,28 @@
                     <asp:Button ID="btnKullaniciGuncelle" runat="server" Text="Güncelle" CssClass="btn btn-primary" OnClick="btnKullaniciGuncelle_Click" />
                 </div>
             </div>
+                </ContentTemplate>
+            </asp:UpdatePanel>
         </div>
     </div>
 
     <script type="text/javascript">
         function showEditUserModal() {
-            var modal = new bootstrap.Modal(document.getElementById('editUserModal'));
-            modal.show();
+            var myModal = new bootstrap.Modal(document.getElementById('editUserModal'), {
+                backdrop: 'static',
+                keyboard: false
+            });
+            myModal.show();
         }
+
+        // Page load'da modal açma kontrolü
+        var prm = Sys.WebForms.PageRequestManager.getInstance();
+        prm.add_endRequest(function () {
+            // UpdatePanel sonrası modal aç
+            if (window.shouldShowUserEditModal) {
+                showEditUserModal();
+                window.shouldShowUserEditModal = false;
+            }
+        });
     </script>
 </asp:Content>
