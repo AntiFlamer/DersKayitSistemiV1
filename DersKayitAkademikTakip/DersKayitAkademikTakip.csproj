@@ -218,6 +218,7 @@
     <Content Include="Account\VerifyPhoneNumber.aspx" />
     <Content Include="Admin\Default.aspx" />
     <Content Include="Admin\DersEkle.aspx" />
+    <Content Include="Admin\Dersler.aspx" />
     <Content Include="Admin\KullaniciEkle.aspx" />
     <Content Include="Admin\Kullanicilar.aspx" />
     <Content Include="Contact.aspx" />
@@ -421,6 +422,13 @@
     </Compile>
     <Compile Include="Admin\DersEkle.aspx.designer.cs">
       <DependentUpon>DersEkle.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Dersler.aspx.cs">
+      <DependentUpon>Dersler.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Dersler.aspx.designer.cs">
+      <DependentUpon>Dersler.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\KullaniciEkle.aspx.cs">
       <DependentUpon>KullaniciEkle.aspx</DependentUpon>
