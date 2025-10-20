@@ -98,7 +98,8 @@
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label class="form-label">Ders Kodu <span class="text-danger">*</span></label>
-                            <asp:TextBox ID="txtEditDersKodu" runat="server" CssClass="form-control" />
+                            <asp:TextBox ID="txtEditDersKodu" runat="server" CssClass="form-control bg-light" ReadOnly="true" />
+                            <small class="text-muted">Ders kodu deðiþtirilemez</small>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Ders Adý <span class="text-danger">*</span></label>
