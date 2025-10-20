@@ -52,10 +52,22 @@
                                     <i class="fas fa-user"></i> <span id="KullaniciAdi" runat="server"></span>
                                 </span>
             
-                                <!-- PANEL BUTONU SADECE ADMIN İÇİN -->
-                                <asp:Panel ID="PanelButon" runat="server" Visible="false">
-                                    <a class="btn btn-outline-light btn-sm" runat="server" href="~/Admin/Default.aspx">
-                                        <i class="fas fa-tachometer-alt"></i> Panel
+                                <!-- ROL BAZLI PANEL BUTONLARI -->
+                                <asp:Panel ID="AdminPanelButon" runat="server" Visible="false">
+                                    <a class="btn btn-outline-danger btn-sm" runat="server" href="~/Admin/Default.aspx">
+                                        <i class="fas fa-user-shield"></i> Admin Panel
+                                    </a>
+                                </asp:Panel>
+
+                                <asp:Panel ID="HocaPanelButon" runat="server" Visible="false">
+                                    <a class="btn btn-outline-primary btn-sm" runat="server" href="~/Hoca/Default.aspx">
+                                        <i class="fas fa-chalkboard-teacher"></i> Öğretim Görevlisi Panel
+                                    </a>
+                                </asp:Panel>
+
+                                <asp:Panel ID="OgrenciPanelButon" runat="server" Visible="false">
+                                    <a class="btn btn-outline-success btn-sm" runat="server" href="~/Ogrenci/Default.aspx">
+                                        <i class="fas fa-graduation-cap"></i> Öğrenci Panel
                                     </a>
                                 </asp:Panel>
             

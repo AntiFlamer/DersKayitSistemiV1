@@ -26,9 +26,27 @@ namespace DersKayitAkademikTakip.Account
                     System.Diagnostics.Debug.WriteLine($"=== LOGIN SUCCESS ===");
                     KullaniciBilgileriniSessionaKaydet(Email.Text);
 
-                    // Uygulama kökünü dikkate alarak yönlendir (virtual path)
-                    var target = ResolveUrl("~/Admin/Default.aspx");
-                    System.Diagnostics.Debug.WriteLine($"Redirect to (resolved): {target}");
+                    // Rol bazlı yönlendirme
+                    string rol = Session["Rol"]?.ToString();
+                    string target = "";
+
+                    switch (rol)
+                    {
+                        case "admin":
+                            target = ResolveUrl("~/Admin/Default.aspx");
+                            break;
+                        case "hoca":
+                            target = ResolveUrl("~/Hoca/Default.aspx");
+                            break;
+                        case "ogrenci":
+                            target = ResolveUrl("~/Ogrenci/Default.aspx");
+                            break;
+                        default:
+                            target = ResolveUrl("~/Default.aspx");
+                            break;
+                    }
+
+                    System.Diagnostics.Debug.WriteLine($"Redirect to (resolved): {target} (Rol: {rol})");
                     Response.Redirect(target, false);
                     Context.ApplicationInstance.CompleteRequest();
                 }

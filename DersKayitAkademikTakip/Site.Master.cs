@@ -76,21 +76,21 @@ namespace DersKayitAkademikTakip
                 KullaniciLi.Visible = true;
                 KullaniciAdi.InnerText = Session["Ad"] + " " + Session["Soyad"];
 
-                // PANEL BUTONU SADECE ADMIN İÇİN
-                if (Session["Rol"] != null && Session["Rol"].ToString() == "admin")
-                {
-                    PanelButon.Visible = true;
-                }
-                else
-                {
-                    PanelButon.Visible = false;
-                }
+                // ROL BAZLI PANEL BUTONLARI
+                string rol = Session["Rol"]?.ToString();
+                
+                AdminPanelButon.Visible = (rol == "admin");
+                HocaPanelButon.Visible = (rol == "hoca");
+                OgrenciPanelButon.Visible = (rol == "ogrenci");
             }
             else
             {
                 // Kullanıcı giriş yapmamış
                 GirisLi.Visible = true;
                 KullaniciLi.Visible = false;
+                AdminPanelButon.Visible = false;
+                HocaPanelButon.Visible = false;
+                OgrenciPanelButon.Visible = false;
             }
         }
 

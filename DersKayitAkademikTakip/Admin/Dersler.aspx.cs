@@ -36,7 +36,7 @@ namespace DersKayitAkademikTakip.Admin
             {
                 conn.Open();
 
-                string query = @"SELECT d.ders_id, d.ders_kodu, d.ders_adi, d.kredi, d.akts_kredi, 
+                string query = @"SELECT d.ders_kodu, d.ders_adi, d.kredi, d.akts_kredi, 
                                d.kontenjan, d.ders_donemi, d.ders_tipi, d.hoca_id,
                                CONCAT(k.ad, ' ', k.soyad) AS hoca_adi
                                FROM Dersler d
@@ -175,7 +175,7 @@ namespace DersKayitAkademikTakip.Admin
             {
                 conn.Open();
 
-                string query = @"SELECT d.ders_id, d.ders_kodu, d.ders_adi, d.kredi, d.akts_kredi, 
+                string query = @"SELECT d.ders_kodu, d.ders_adi, d.kredi, d.akts_kredi, 
                                d.kontenjan, d.ders_donemi, d.ders_tipi, d.hoca_id,
                                CONCAT(k.ad, ' ', k.soyad) AS hoca_adi
                                FROM Dersler d
@@ -219,13 +219,13 @@ namespace DersKayitAkademikTakip.Admin
         {
             if (e.CommandName == "Duzenle")
             {
-                int dersId = Convert.ToInt32(e.CommandArgument);
-                DersBilgileriniYukle(dersId);
+                string dersKodu = e.CommandArgument.ToString();
+                DersBilgileriniYukle(dersKodu);
             }
             else if (e.CommandName == "Sil")
             {
-                int dersId = Convert.ToInt32(e.CommandArgument);
-                DersSil(dersId);
+                string dersKodu = e.CommandArgument.ToString();
+                DersSil(dersKodu);
             }
         }
 
@@ -234,7 +234,7 @@ namespace DersKayitAkademikTakip.Admin
             // Gerekirse ekstra styling eklenebilir
         }
 
-        private void DersBilgileriniYukle(int dersId)
+        private void DersBilgileriniYukle(string dersKodu)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["UniversiteDB"].ConnectionString;
 
@@ -242,13 +242,13 @@ namespace DersKayitAkademikTakip.Admin
             {
                 conn.Open();
 
-                string query = @"SELECT ders_id, ders_kodu, ders_adi, kredi, akts_kredi, 
+                string query = @"SELECT ders_kodu, ders_adi, kredi, akts_kredi, 
                                kontenjan, ders_donemi, hoca_id, ders_tipi 
                                FROM Dersler 
-                               WHERE ders_id = @id";
+                               WHERE ders_kodu = @dersKodu";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@id", dersId);
+                cmd.Parameters.AddWithValue("@dersKodu", dersKodu);
 
                 int? hocaId = null;
 
@@ -256,7 +256,7 @@ namespace DersKayitAkademikTakip.Admin
                 {
                     if (reader.Read())
                     {
-                        hfDersId.Value = reader["ders_id"].ToString();
+                        hfDersId.Value = reader["ders_kodu"].ToString();
                         txtEditDersKodu.Text = reader["ders_kodu"].ToString();
                         txtEditDersAdi.Text = reader["ders_adi"].ToString();
                         txtEditKredi.Text = reader["kredi"].ToString();
@@ -313,19 +313,17 @@ namespace DersKayitAkademikTakip.Admin
                     conn.Open();
 
                     string query = @"UPDATE Dersler 
-                                   SET ders_kodu = @ders_kodu, 
-                                       ders_adi = @ders_adi, 
+                                   SET ders_adi = @ders_adi, 
                                        kredi = @kredi, 
                                        akts_kredi = @akts_kredi, 
                                        kontenjan = @kontenjan, 
                                        ders_donemi = @ders_donemi, 
                                        hoca_id = @hoca_id, 
                                        ders_tipi = @ders_tipi 
-                                   WHERE ders_id = @id";
+                                   WHERE ders_kodu = @ders_kodu";
 
                     MySqlCommand cmd = new MySqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@id", Convert.ToInt32(hfDersId.Value));
-                    cmd.Parameters.AddWithValue("@ders_kodu", txtEditDersKodu.Text.Trim());
+                    cmd.Parameters.AddWithValue("@ders_kodu", hfDersId.Value);
                     cmd.Parameters.AddWithValue("@ders_adi", txtEditDersAdi.Text.Trim());
                     cmd.Parameters.AddWithValue("@kredi", Convert.ToInt32(txtEditKredi.Text));
                     cmd.Parameters.AddWithValue("@akts_kredi", Convert.ToInt32(txtEditAktsKredi.Text));
@@ -376,7 +374,7 @@ namespace DersKayitAkademikTakip.Admin
             }
         }
 
-        private void DersSil(int dersId)
+        private void DersSil(string dersKodu)
         {
             try
             {
@@ -387,9 +385,9 @@ namespace DersKayitAkademikTakip.Admin
                     conn.Open();
 
                     // Önce bu derse kayýtlý öðrenci var mý kontrol et
-                    string checkQuery = "SELECT COUNT(*) FROM Kayitlar WHERE ders_id = @id";
+                    string checkQuery = "SELECT COUNT(*) FROM Kayitlar WHERE ders_kodu = @dersKodu";
                     MySqlCommand checkCmd = new MySqlCommand(checkQuery, conn);
-                    checkCmd.Parameters.AddWithValue("@id", dersId);
+                    checkCmd.Parameters.AddWithValue("@dersKodu", dersKodu);
                     int kayitSayisi = Convert.ToInt32(checkCmd.ExecuteScalar());
 
                     if (kayitSayisi > 0)
@@ -401,9 +399,9 @@ namespace DersKayitAkademikTakip.Admin
                     }
 
                     // Kayýt yoksa dersi sil
-                    string query = "DELETE FROM Dersler WHERE ders_id = @id";
+                    string query = "DELETE FROM Dersler WHERE ders_kodu = @dersKodu";
                     MySqlCommand cmd = new MySqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@id", dersId);
+                    cmd.Parameters.AddWithValue("@dersKodu", dersKodu);
 
                     cmd.ExecuteNonQuery();
 

@@ -5,8 +5,11 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card shadow">
-                    <div class="card-header bg-primary text-white">
-                        <h4><i class="fas fa-book"></i> Ders Yönetimi</h4>
+                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0"><i class="fas fa-book"></i> Ders Yönetimi</h4>
+                        <a href="Default.aspx" class="btn btn-light btn-sm">
+                            <i class="fas fa-arrow-left"></i> Geri
+                        </a>
                     </div>
                     <div class="card-body">
                         <asp:Panel ID="SuccessPanel" runat="server" Visible="false" CssClass="alert alert-success">
@@ -44,10 +47,9 @@
 
                         <!-- DERS LÝSTESÝ -->
                         <asp:GridView ID="gvDersler" runat="server" AutoGenerateColumns="false" CssClass="table table-striped table-bordered"
-                            DataKeyNames="ders_id" OnRowCommand="gvDersler_RowCommand" OnRowDataBound="gvDersler_RowDataBound"
+                            DataKeyNames="ders_kodu" OnRowCommand="gvDersler_RowCommand" OnRowDataBound="gvDersler_RowDataBound"
                             EmptyDataText="Ders bulunamadý.">
                             <Columns>
-                                <asp:BoundField DataField="ders_id" HeaderText="ID" ItemStyle-Width="50px" />
                                 <asp:BoundField DataField="ders_kodu" HeaderText="Ders Kodu" />
                                 <asp:BoundField DataField="ders_adi" HeaderText="Ders Adý" />
                                 <asp:BoundField DataField="kredi" HeaderText="Kredi" ItemStyle-Width="70px" ItemStyle-CssClass="text-center" />
@@ -68,9 +70,9 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Ýþlemler" ItemStyle-Width="180px">
                                     <ItemTemplate>
-                                        <asp:LinkButton ID="btnDuzenle" runat="server" CommandName="Duzenle" CommandArgument='<%# Eval("ders_id") %>'
+                                        <asp:LinkButton ID="btnDuzenle" runat="server" CommandName="Duzenle" CommandArgument='<%# Eval("ders_kodu") %>'
                                             CssClass="btn btn-warning btn-sm" Text="Düzenle" />
-                                        <asp:LinkButton ID="btnSil" runat="server" CommandName="Sil" CommandArgument='<%# Eval("ders_id") %>'
+                                        <asp:LinkButton ID="btnSil" runat="server" CommandName="Sil" CommandArgument='<%# Eval("ders_kodu") %>'
                                             CssClass="btn btn-danger btn-sm" Text="Sil" OnClientClick="return confirm('Bu dersi silmek istediðinizden emin misiniz?');" />
                                     </ItemTemplate>
                                 </asp:TemplateField>

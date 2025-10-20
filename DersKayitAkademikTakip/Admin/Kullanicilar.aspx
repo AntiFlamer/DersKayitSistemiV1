@@ -5,8 +5,11 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card shadow">
-                    <div class="card-header bg-info text-white">
-                        <h4><i class="fas fa-users"></i> Kullanıcı Yönetimi</h4>
+                    <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0"><i class="fas fa-users"></i> Kullanıcı Yönetimi</h4>
+                        <a href="Default.aspx" class="btn btn-light btn-sm">
+                            <i class="fas fa-arrow-left"></i> Geri
+                        </a>
                     </div>
                     <div class="card-body">
                         <asp:Panel ID="SuccessPanel" runat="server" Visible="false" CssClass="alert alert-success">
