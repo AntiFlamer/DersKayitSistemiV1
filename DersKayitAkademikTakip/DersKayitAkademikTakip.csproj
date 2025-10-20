@@ -217,6 +217,7 @@
     <Content Include="Account\TwoFactorAuthenticationSignIn.aspx" />
     <Content Include="Account\VerifyPhoneNumber.aspx" />
     <Content Include="Admin\Default.aspx" />
+    <Content Include="Admin\DersEkle.aspx" />
     <Content Include="Admin\KullaniciEkle.aspx" />
     <Content Include="Admin\Kullanicilar.aspx" />
     <Content Include="Contact.aspx" />
@@ -270,6 +271,8 @@
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="Admin\Web.config" />
+    <Content Include="ConnectionStrings.config" />
+    <Content Include="ConnectionStrings.sample.config" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />
@@ -411,6 +414,13 @@
     </Compile>
     <Compile Include="Admin\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\DersEkle.aspx.cs">
+      <DependentUpon>DersEkle.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\DersEkle.aspx.designer.cs">
+      <DependentUpon>DersEkle.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\KullaniciEkle.aspx.cs">
       <DependentUpon>KullaniciEkle.aspx</DependentUpon>
