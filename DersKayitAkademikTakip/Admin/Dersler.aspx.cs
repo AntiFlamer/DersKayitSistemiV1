@@ -11,15 +11,11 @@ namespace DersKayitAkademikTakip.Admin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            // Session kontrolü
             if (Session["KullaniciID"] == null || Session["Rol"] == null || Session["Rol"].ToString() != "admin")
             {
-                System.Diagnostics.Debug.WriteLine($"=== REDIRECT - Session: KullaniciID={Session["KullaniciID"]}, Rol={Session["Rol"]} ===");
                 Response.Redirect("~/Account/Login.aspx");
                 return;
             }
-
-            System.Diagnostics.Debug.WriteLine($"=== SESSION ÇALIÞIYOR: {Session["Ad"]} {Session["Soyad"]} ===");
 
             if (!IsPostBack)
             {
@@ -81,33 +77,7 @@ namespace DersKayitAkademikTakip.Admin
             }
         }
 
-        private void HocalariYukleEdit()
-        {
-            string connectionString = ConfigurationManager.ConnectionStrings["UniversiteDB"].ConnectionString;
 
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
-            {
-                conn.Open();
-
-                string query = @"SELECT kullanici_id, CONCAT(ad, ' ', soyad) AS ad_soyad 
-                               FROM Kullanicilar 
-                               WHERE rol = 'hoca' AND aktif = 1 
-                               ORDER BY ad, soyad";
-
-                MySqlCommand cmd = new MySqlCommand(query, conn);
-                MySqlDataReader reader = cmd.ExecuteReader();
-
-                ddlEditHoca.Items.Clear();
-                ddlEditHoca.Items.Add(new ListItem("-- Seçiniz --", ""));
-
-                while (reader.Read())
-                {
-                    ddlEditHoca.Items.Add(new ListItem(reader["ad_soyad"].ToString(), reader["kullanici_id"].ToString()));
-                }
-
-                reader.Close();
-            }
-        }
 
         // DERS TÝPÝ BADGE METODLARI
         public string GetDersTipiBadgeClass(string dersTipi)
@@ -220,7 +190,7 @@ namespace DersKayitAkademikTakip.Admin
             if (e.CommandName == "Duzenle")
             {
                 string dersKodu = e.CommandArgument.ToString();
-                DersBilgileriniYukle(dersKodu);
+                Response.Redirect($"DerslerDuzenle.aspx?ders_kodu={dersKodu}");
             }
             else if (e.CommandName == "Sil")
             {
@@ -229,150 +199,9 @@ namespace DersKayitAkademikTakip.Admin
             }
         }
 
-        protected void gvDersler_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
-            // Gerekirse ekstra styling eklenebilir
-        }
+        // RowDataBound kullanýlmýyor
 
-        private void DersBilgileriniYukle(string dersKodu)
-        {
-            string connectionString = ConfigurationManager.ConnectionStrings["UniversiteDB"].ConnectionString;
 
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
-            {
-                conn.Open();
-
-                string query = @"SELECT ders_kodu, ders_adi, kredi, akts_kredi, 
-                               kontenjan, ders_donemi, hoca_id, ders_tipi 
-                               FROM Dersler 
-                               WHERE ders_kodu = @dersKodu";
-
-                MySqlCommand cmd = new MySqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@dersKodu", dersKodu);
-
-                int? hocaId = null;
-
-                using (MySqlDataReader reader = cmd.ExecuteReader())
-                {
-                    if (reader.Read())
-                    {
-                        hfDersId.Value = reader["ders_kodu"].ToString();
-                        txtEditDersKodu.Text = reader["ders_kodu"].ToString();
-                        txtEditDersAdi.Text = reader["ders_adi"].ToString();
-                        txtEditKredi.Text = reader["kredi"].ToString();
-                        txtEditAktsKredi.Text = reader["akts_kredi"].ToString();
-                        txtEditKontenjan.Text = reader["kontenjan"].ToString();
-                        txtEditDersDonemi.Text = reader["ders_donemi"].ToString();
-                        ddlEditDersTipi.SelectedValue = reader["ders_tipi"].ToString();
-
-                        // Hoca ID'sini kaydet
-                        if (reader["hoca_id"] != DBNull.Value)
-                        {
-                            hocaId = Convert.ToInt32(reader["hoca_id"]);
-                        }
-                    }
-                }
-
-                // Hoca dropdown'unu yükle
-                HocalariYukleEdit();
-
-                // Seçili hocayý ayarla
-                if (hocaId.HasValue)
-                {
-                    ddlEditHoca.SelectedValue = hocaId.Value.ToString();
-                }
-            }
-
-            // Modal'ý göster
-            ScriptManager.RegisterStartupScript(this, GetType(), "showModal", "window.shouldShowEditModal = true; showEditModal();", true);
-        }
-
-        protected void btnGuncelle_Click(object sender, EventArgs e)
-        {
-            // Validasyon
-            if (string.IsNullOrWhiteSpace(txtEditDersKodu.Text) ||
-                string.IsNullOrWhiteSpace(txtEditDersAdi.Text) ||
-                string.IsNullOrWhiteSpace(txtEditKredi.Text) ||
-                string.IsNullOrWhiteSpace(txtEditAktsKredi.Text) ||
-                string.IsNullOrWhiteSpace(txtEditKontenjan.Text) ||
-                string.IsNullOrWhiteSpace(txtEditDersDonemi.Text) ||
-                string.IsNullOrWhiteSpace(ddlEditDersTipi.SelectedValue))
-            {
-                SuccessPanel.Visible = false;
-                ErrorPanel.Visible = true;
-                ErrorText.Text = "Lütfen zorunlu alanlarý doldurunuz! (*)";
-                return;
-            }
-
-            try
-            {
-                string connectionString = ConfigurationManager.ConnectionStrings["UniversiteDB"].ConnectionString;
-
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
-                {
-                    conn.Open();
-
-                    string query = @"UPDATE Dersler 
-                                   SET ders_adi = @ders_adi, 
-                                       kredi = @kredi, 
-                                       akts_kredi = @akts_kredi, 
-                                       kontenjan = @kontenjan, 
-                                       ders_donemi = @ders_donemi, 
-                                       hoca_id = @hoca_id, 
-                                       ders_tipi = @ders_tipi 
-                                   WHERE ders_kodu = @ders_kodu";
-
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@ders_kodu", hfDersId.Value);
-                    cmd.Parameters.AddWithValue("@ders_adi", txtEditDersAdi.Text.Trim());
-                    cmd.Parameters.AddWithValue("@kredi", Convert.ToInt32(txtEditKredi.Text));
-                    cmd.Parameters.AddWithValue("@akts_kredi", Convert.ToInt32(txtEditAktsKredi.Text));
-                    cmd.Parameters.AddWithValue("@kontenjan", Convert.ToInt32(txtEditKontenjan.Text));
-                    cmd.Parameters.AddWithValue("@ders_donemi", txtEditDersDonemi.Text.Trim());
-                    cmd.Parameters.AddWithValue("@ders_tipi", ddlEditDersTipi.SelectedValue);
-
-                    // Hoca seçilmemiþse NULL gönder
-                    if (string.IsNullOrEmpty(ddlEditHoca.SelectedValue))
-                    {
-                        cmd.Parameters.AddWithValue("@hoca_id", DBNull.Value);
-                    }
-                    else
-                    {
-                        cmd.Parameters.AddWithValue("@hoca_id", Convert.ToInt32(ddlEditHoca.SelectedValue));
-                    }
-
-                    int result = cmd.ExecuteNonQuery();
-
-                    if (result > 0)
-                    {
-                        SuccessPanel.Visible = true;
-                        ErrorPanel.Visible = false;
-                        SuccessText.Text = "Ders baþarýyla güncellendi!";
-                        DersleriYukle();
-                    }
-                }
-            }
-            catch (MySqlException mysqlEx)
-            {
-                SuccessPanel.Visible = false;
-                ErrorPanel.Visible = true;
-
-                if (mysqlEx.Number == 1062) // Duplicate entry
-                {
-                    ErrorText.Text = "Bu ders kodu zaten mevcut! Lütfen farklý bir ders kodu giriniz.";
-                }
-                else
-                {
-                    ErrorText.Text = "Veritabaný hatasý: " + mysqlEx.Message;
-                }
-            }
-            catch (Exception ex)
-            {
-                SuccessPanel.Visible = false;
-                ErrorPanel.Visible = true;
-                ErrorText.Text = "Hata: " + ex.Message;
-            }
-        }
 
         private void DersSil(string dersKodu)
         {

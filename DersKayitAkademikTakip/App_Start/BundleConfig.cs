@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -26,15 +26,28 @@ namespace DersKayitAkademikTakip
 
             // Order is very important for these files to work, they have explicit dependencies
             bundles.Add(new ScriptBundle("~/bundles/MsAjaxJs").Include(
-                    "~/Scripts/WebForms/MsAjax/MicrosoftAjax.js",
-                    "~/Scripts/WebForms/MsAjax/MicrosoftAjaxApplicationServices.js",
-                    "~/Scripts/WebForms/MsAjax/MicrosoftAjaxTimer.js",
-                    "~/Scripts/WebForms/MsAjax/MicrosoftAjaxWebForms.js"));
+                    "~/Scripts/WebForms/MSAjax/MicrosoftAjax.js",
+                    "~/Scripts/WebForms/MSAjax/MicrosoftAjaxApplicationServices.js",
+                    "~/Scripts/WebForms/MSAjax/MicrosoftAjaxTimer.js",
+                    "~/Scripts/WebForms/MSAjax/MicrosoftAjaxWebForms.js"));
 
-            // Use the Development version of Modernizr to develop with and learn from. Then, when you’re
+            // Use the Development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at https://modernizr.com to pick only the tests you need
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                             "~/Scripts/modernizr-*"));
+
+            // Bootstrap CSS Bundle
+            bundles.Add(new StyleBundle("~/Content/css").Include(
+                            "~/Content/bootstrap.css",
+                            "~/Content/site.css"));
+
+            // Bootstrap JavaScript Bundle
+            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
+                            "~/Scripts/bootstrap.bundle.js"));
+
+            // jQuery Bundle
+            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
+                            "~/Scripts/jquery-3.7.1.js"));
         }
 
         public static void RegisterJQueryScriptManager()
@@ -42,10 +55,10 @@ namespace DersKayitAkademikTakip
             ScriptManager.ScriptResourceMapping.AddDefinition("jquery",
                 new ScriptResourceDefinition
                 {
-                    Path = "~/scripts/jquery-3.7.0.min.js",
-                    DebugPath = "~/scripts/jquery-3.7.0.js",
-                    CdnPath = "http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.7.0.min.js",
-                    CdnDebugPath = "http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.7.0.js"
+                    Path = "~/scripts/jquery-3.7.1.min.js",
+                    DebugPath = "~/scripts/jquery-3.7.1.js",
+                    CdnPath = "http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.7.1.min.js",
+                    CdnDebugPath = "http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.7.1.js"
                 });
         }
     }

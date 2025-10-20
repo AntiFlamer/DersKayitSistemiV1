@@ -9,19 +9,14 @@ namespace DersKayitAkademikTakip.Admin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            // Sadece session kontrolü - query string YOK
             if (Session["KullaniciID"] == null || Session["Rol"] == null || Session["Rol"].ToString() != "admin")
             {
-                System.Diagnostics.Debug.WriteLine($"=== REDIRECT - Session: KullaniciID={Session["KullaniciID"]}, Rol={Session["Rol"]} ===");
                 Response.Redirect("~/Account/Login.aspx");
                 return;
             }
 
-            System.Diagnostics.Debug.WriteLine($"=== SESSION ÇALIŞIYOR: {Session["Ad"]} {Session["Soyad"]} ===");
-
             if (!IsPostBack)
             {
-                // Normal sayfa yükleme işlemleri
                 IstatistikleriYukle();
             }
         }

@@ -47,7 +47,7 @@
 
                         <!-- DERS LÝSTESÝ -->
                         <asp:GridView ID="gvDersler" runat="server" AutoGenerateColumns="false" CssClass="table table-striped table-bordered"
-                            DataKeyNames="ders_kodu" OnRowCommand="gvDersler_RowCommand" OnRowDataBound="gvDersler_RowDataBound"
+                            DataKeyNames="ders_kodu" OnRowCommand="gvDersler_RowCommand"
                             EmptyDataText="Ders bulunamadý.">
                             <Columns>
                                 <asp:BoundField DataField="ders_kodu" HeaderText="Ders Kodu" />
@@ -84,94 +84,4 @@
         </div>
     </div>
 
-    <!-- DÜZENLEME MODAL -->
-    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-        <div class="modal-dialog modal-lg">
-            <asp:UpdatePanel ID="upEditModal" runat="server" UpdateMode="Conditional">
-                <ContentTemplate>
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editModalLabel">Ders Düzenle</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <asp:HiddenField ID="hfDersId" runat="server" />
-                    
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label class="form-label">Ders Kodu <span class="text-danger">*</span></label>
-                            <asp:TextBox ID="txtEditDersKodu" runat="server" CssClass="form-control bg-light" ReadOnly="true" />
-                            <small class="text-muted">Ders kodu deðiþtirilemez</small>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Ders Adý <span class="text-danger">*</span></label>
-                            <asp:TextBox ID="txtEditDersAdi" runat="server" CssClass="form-control" />
-                        </div>
-                    </div>
-
-                    <div class="row mb-3">
-                        <div class="col-md-3">
-                            <label class="form-label">Kredi <span class="text-danger">*</span></label>
-                            <asp:TextBox ID="txtEditKredi" runat="server" CssClass="form-control" TextMode="Number" />
-                        </div>
-                        <div class="col-md-3">
-                            <label class="form-label">AKTS Kredi <span class="text-danger">*</span></label>
-                            <asp:TextBox ID="txtEditAktsKredi" runat="server" CssClass="form-control" TextMode="Number" />
-                        </div>
-                        <div class="col-md-3">
-                            <label class="form-label">Kontenjan <span class="text-danger">*</span></label>
-                            <asp:TextBox ID="txtEditKontenjan" runat="server" CssClass="form-control" TextMode="Number" />
-                        </div>
-                        <div class="col-md-3">
-                            <label class="form-label">Dönem <span class="text-danger">*</span></label>
-                            <asp:TextBox ID="txtEditDersDonemi" runat="server" CssClass="form-control" placeholder="Örn: Güz 2024" />
-                        </div>
-                    </div>
-
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label class="form-label">Hoca</label>
-                            <asp:DropDownList ID="ddlEditHoca" runat="server" CssClass="form-control">
-                                <asp:ListItem Value="">-- Seçiniz --</asp:ListItem>
-                            </asp:DropDownList>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Ders Tipi <span class="text-danger">*</span></label>
-                            <asp:DropDownList ID="ddlEditDersTipi" runat="server" CssClass="form-control">
-                                <asp:ListItem Value="">-- Seçiniz --</asp:ListItem>
-                                <asp:ListItem Value="zorunlu">Zorunlu</asp:ListItem>
-                                <asp:ListItem Value="secmeli">Seçmeli</asp:ListItem>
-                            </asp:DropDownList>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ýptal</button>
-                    <asp:Button ID="btnGuncelle" runat="server" Text="Güncelle" CssClass="btn btn-primary" OnClick="btnGuncelle_Click" />
-                </div>
-            </div>
-                </ContentTemplate>
-            </asp:UpdatePanel>
-        </div>
-    </div>
-
-    <script type="text/javascript">
-        function showEditModal() {
-            var myModal = new bootstrap.Modal(document.getElementById('editModal'), {
-                backdrop: 'static',
-                keyboard: false
-            });
-            myModal.show();
-        }
-
-        // Page load'da modal açma kontrolü
-        var prm = Sys.WebForms.PageRequestManager.getInstance();
-        prm.add_endRequest(function () {
-            // UpdatePanel sonrasý modal aç
-            if (window.shouldShowEditModal) {
-                showEditModal();
-                window.shouldShowEditModal = false;
-            }
-        });
-    </script>
 </asp:Content>

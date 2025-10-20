@@ -50,7 +50,7 @@
 
                         <!-- KULLANICI LİSTESİ -->
                         <asp:GridView ID="gvKullanicilar" runat="server" AutoGenerateColumns="false" CssClass="table table-striped table-bordered"
-                            DataKeyNames="kullanici_id" OnRowCommand="gvKullanicilar_RowCommand" OnRowDataBound="gvKullanicilar_RowDataBound"
+                            DataKeyNames="kullanici_id" OnRowCommand="gvKullanicilar_RowCommand"
                             EmptyDataText="Kullanıcı bulunamadı.">
                             <Columns>
                                 <asp:BoundField DataField="kullanici_id" HeaderText="ID" ItemStyle-Width="50px" />
@@ -91,92 +91,4 @@
         </div>
     </div>
 
-    <!-- DÜZENLEME MODAL -->
-    <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-        <div class="modal-dialog modal-lg">
-            <asp:UpdatePanel ID="upEditUserModal" runat="server" UpdateMode="Conditional">
-                <ContentTemplate>
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editUserModalLabel">Kullanıcı Düzenle</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <asp:HiddenField ID="hfKullaniciId" runat="server" />
-                    
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label class="form-label">TC Kimlik No <span class="text-danger">*</span></label>
-                            <asp:TextBox ID="txtEditTC" runat="server" CssClass="form-control bg-light" ReadOnly="true" MaxLength="11" />
-                            <small class="text-muted">TC Kimlik numarası değiştirilemez</small>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">E-posta <span class="text-danger">*</span></label>
-                            <asp:TextBox ID="txtEditEmail" runat="server" CssClass="form-control" TextMode="Email" />
-                        </div>
-                    </div>
-
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label class="form-label">Ad <span class="text-danger">*</span></label>
-                            <asp:TextBox ID="txtEditAd" runat="server" CssClass="form-control" MaxLength="50" />
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Soyad <span class="text-danger">*</span></label>
-                            <asp:TextBox ID="txtEditSoyad" runat="server" CssClass="form-control" MaxLength="50" />
-                        </div>
-                    </div>
-
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label class="form-label">Rol <span class="text-danger">*</span></label>
-                            <asp:DropDownList ID="ddlEditRol" runat="server" CssClass="form-control">
-                                <asp:ListItem Value="ogrenci">Öğrenci</asp:ListItem>
-                                <asp:ListItem Value="hoca">Öğretim Görevlisi</asp:ListItem>
-                                <asp:ListItem Value="admin">Admin</asp:ListItem>
-                            </asp:DropDownList>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Yeni Şifre</label>
-                            <asp:TextBox ID="txtEditSifre" runat="server" CssClass="form-control" TextMode="Password" placeholder="Boş bırakılırsa değişmez" />
-                            <small class="text-muted">Şifre değiştirmek için doldurun, değilse boş bırakın</small>
-                        </div>
-                    </div>
-
-                    <div class="form-check">
-                        <asp:CheckBox ID="chkEditAktif" runat="server" CssClass="form-check-input" />
-                        <label class="form-check-label" for="MainContent_chkEditAktif">
-                            Kullanıcı Aktif
-                        </label>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
-                    <asp:Button ID="btnKullaniciGuncelle" runat="server" Text="Güncelle" CssClass="btn btn-primary" OnClick="btnKullaniciGuncelle_Click" />
-                </div>
-            </div>
-                </ContentTemplate>
-            </asp:UpdatePanel>
-        </div>
-    </div>
-
-    <script type="text/javascript">
-        function showEditUserModal() {
-            var myModal = new bootstrap.Modal(document.getElementById('editUserModal'), {
-                backdrop: 'static',
-                keyboard: false
-            });
-            myModal.show();
-        }
-
-        // Page load'da modal açma kontrolü
-        var prm = Sys.WebForms.PageRequestManager.getInstance();
-        prm.add_endRequest(function () {
-            // UpdatePanel sonrası modal aç
-            if (window.shouldShowUserEditModal) {
-                showEditUserModal();
-                window.shouldShowUserEditModal = false;
-            }
-        });
-    </script>
 </asp:Content>

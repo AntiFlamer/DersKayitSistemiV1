@@ -219,8 +219,10 @@
     <Content Include="Admin\Default.aspx" />
     <Content Include="Admin\DersEkle.aspx" />
     <Content Include="Admin\Dersler.aspx" />
+    <Content Include="Admin\DerslerDuzenle.aspx" />
     <Content Include="Admin\KullaniciEkle.aspx" />
     <Content Include="Admin\Kullanicilar.aspx" />
+    <Content Include="Admin\KullanicilarDuzenle.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
@@ -431,6 +433,13 @@
     <Compile Include="Admin\Dersler.aspx.designer.cs">
       <DependentUpon>Dersler.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Admin\DerslerDuzenle.aspx.cs">
+      <DependentUpon>DerslerDuzenle.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\DerslerDuzenle.aspx.designer.cs">
+      <DependentUpon>DerslerDuzenle.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Admin\KullaniciEkle.aspx.cs">
       <DependentUpon>KullaniciEkle.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -446,7 +455,6 @@
     <Compile Include="Admin\Kullanicilar.aspx.designer.cs">
       <DependentUpon>Kullanicilar.aspx</DependentUpon>
     </Compile>
-    <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="About.aspx.cs">
       <DependentUpon>About.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -454,6 +462,14 @@
     <Compile Include="About.aspx.designer.cs">
       <DependentUpon>About.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Admin\KullanicilarDuzenle.aspx.cs">
+      <DependentUpon>KullanicilarDuzenle.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\KullanicilarDuzenle.aspx.designer.cs">
+      <DependentUpon>KullanicilarDuzenle.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />

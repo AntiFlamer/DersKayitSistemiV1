@@ -11,8 +11,12 @@
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>
-    <webopt:bundlereference runat="server" path="~/Content/css" />
-    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    
+    <!-- Styles: use server-side resolution to avoid broken paths under virtual directories -->
+    <link runat="server" href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" />
+    <link runat="server" href="~/Content/Site.css" rel="stylesheet" />
+    <link runat="server" href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
 </head>
 <body>
@@ -89,8 +93,8 @@
             </footer>
         </div>
     </form>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js"></script>
+    
+    <script src='<%: ResolveUrl("~/Scripts/jquery-3.7.1.min.js") %>'></script>
+    <script src='<%: ResolveUrl("~/Scripts/bootstrap.bundle.min.js") %>'></script>
 </body>
 </html>
