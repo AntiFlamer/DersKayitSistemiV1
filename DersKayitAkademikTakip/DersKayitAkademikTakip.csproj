@@ -246,6 +246,9 @@
     <Content Include="Global.asax" />
     <Content Include="Account\Web.config" />
     <Content Include="Ogrenci\Default.aspx" />
+    <Content Include="Ogrenci\DersKayit.aspx" />
+    <Content Include="Ogrenci\Derslerim.aspx" />
+    <Content Include="Ogrenci\Notlarim.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -497,6 +500,27 @@
     </Compile>
     <Compile Include="Ogrenci\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Ogrenci\DersKayit.aspx.cs">
+      <DependentUpon>DersKayit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Ogrenci\DersKayit.aspx.designer.cs">
+      <DependentUpon>DersKayit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Ogrenci\Derslerim.aspx.cs">
+      <DependentUpon>Derslerim.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Ogrenci\Derslerim.aspx.designer.cs">
+      <DependentUpon>Derslerim.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Ogrenci\Notlarim.aspx.cs">
+      <DependentUpon>Notlarim.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Ogrenci\Notlarim.aspx.designer.cs">
+      <DependentUpon>Notlarim.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.Master.cs">
