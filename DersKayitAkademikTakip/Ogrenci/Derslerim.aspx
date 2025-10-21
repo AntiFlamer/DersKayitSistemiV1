@@ -2,6 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <div class="container-fluid mt-4">
         <h2><i class="fas fa-book-open"></i> Kayıtlı Derslerim</h2>
+        <a href="Default.aspx" class="btn btn-secondary btn-sm mb-3"><i class="fas fa-arrow-left"></i> Geri</a>
         <hr />
         <asp:GridView ID="gvKayıtlar" runat="server" AutoGenerateColumns="false" CssClass="table table-striped table-bordered"
             DataKeyNames="kayit_id" OnRowCommand="gvKayıtlar_RowCommand" EmptyDataText="Herhangi bir kayıt bulunamadı.">

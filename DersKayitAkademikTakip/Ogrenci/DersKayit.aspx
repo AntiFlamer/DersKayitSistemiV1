@@ -5,6 +5,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h2><i class="fas fa-plus-circle"></i> Yeni Ders Kaydý</h2>
+                <a href="Default.aspx" class="btn btn-secondary btn-sm mb-3"><i class="fas fa-arrow-left"></i> Geri</a>
                 <hr />
             </div>
         </div>
