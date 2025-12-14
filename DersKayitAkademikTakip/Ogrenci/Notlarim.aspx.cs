@@ -31,11 +31,16 @@ namespace DersKayitAkademikTakip.Ogrenci
                 using (var conn = new MySqlConnection(cs))
                 {
                     conn.Open();
-                    string sql = @"SELECT n.ders_kodu, d.ders_adi, n.vize, n.final, n.ortalama, n.harf_notu
-                                   FROM notlar n
-                                   INNER JOIN Dersler d ON n.ders_kodu = d.ders_kodu
-                                   WHERE n.ogrenci_id = @o
-                                   ORDER BY d.ders_kodu";
+                    string sql = @"SELECT n.ders_kodu,
+                                           d.ders_adi,
+                                           n.vize_notu AS vize,
+                                           n.final_notu AS final,
+                                           n.ortalama,
+                                           n.harf_notu
+                                    FROM notlar n
+                                    INNER JOIN Dersler d ON n.ders_kodu = d.ders_kodu
+                                    WHERE n.ogrenci_id = @o
+                                    ORDER BY d.ders_kodu";
                     using (var cmd = new MySqlCommand(sql, conn))
                     {
                         cmd.Parameters.AddWithValue("@o", ogrenciId);
@@ -67,5 +72,5 @@ namespace DersKayitAkademikTakip.Ogrenci
                 gvNotlar.DataBind();
             }
         }
-    }
+    }                                                                                        
 }

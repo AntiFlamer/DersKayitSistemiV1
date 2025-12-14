@@ -90,7 +90,7 @@ DersKayitAkademikTakip/
   - `Admin/DerslerDuzenle.aspx?ders_kodu=XXX`
   - `Admin/KullanicilarDuzenle.aspx?kullanici_id=ID`
 
-## Ekran Görüntüleri (Ýsteðe Baðlý)
+## Ekran Görüntüleri
 
 `docs/` klasörü altýna ekran görüntüleri ekleyip burada referans verebilirsiniz:
 
