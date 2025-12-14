@@ -30,17 +30,21 @@ namespace DersKayitAkademikTakip.Admin
                 {
                     conn.Open();
 
+                    string rol = ddlRol.SelectedValue;
+                    string kullaniciNo = UretKullaniciNo(rol);
+
                     string query = @"INSERT INTO Kullanicilar 
-                                    (tc_kimlik, ad, soyad, email, sifre, rol) 
-                                    VALUES (@tc, @ad, @soyad, @email, @sifre, @rol)";
+                                    (tc_kimlik, ad, soyad, email, sifre, rol, kullanici_no) 
+                                    VALUES (@tc, @ad, @soyad, @email, @sifre, @rol, @kno)";
 
                     MySqlCommand cmd = new MySqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@tc", txtTC.Text);
-                    cmd.Parameters.AddWithValue("@ad", txtAd.Text);
-                    cmd.Parameters.AddWithValue("@soyad", txtSoyad.Text);
-                    cmd.Parameters.AddWithValue("@email", txtEmail.Text);
-                    cmd.Parameters.AddWithValue("@sifre", txtSifre.Text);
-                    cmd.Parameters.AddWithValue("@rol", ddlRol.SelectedValue);
+                    cmd.Parameters.AddWithValue("@tc", txtTC.Text.Trim());
+                    cmd.Parameters.AddWithValue("@ad", txtAd.Text.Trim());
+                    cmd.Parameters.AddWithValue("@soyad", txtSoyad.Text.Trim());
+                    cmd.Parameters.AddWithValue("@email", txtEmail.Text.Trim());
+                    cmd.Parameters.AddWithValue("@sifre", txtSifre.Text.Trim());
+                    cmd.Parameters.AddWithValue("@rol", rol);
+                    cmd.Parameters.AddWithValue("@kno", kullaniciNo);
 
                     int result = cmd.ExecuteNonQuery();
 
@@ -61,6 +65,42 @@ namespace DersKayitAkademikTakip.Admin
                 SuccessPanel.Visible = false;
                 ErrorPanel.Visible = true;
                 ErrorText.Text = "Hata: " + ex.Message;
+            }
+        }
+
+        private string UretKullaniciNo(string rol)
+        {
+            // İlk iki hane: yılın son iki hanesi
+            int yil = DateTime.Now.Year;
+            string yy = (yil % 100).ToString("D2");
+
+            // Kalan 7 haneyi admin girebilsin: basitçe 0000001, 0000002... otomatik verelim
+            // (İstersen burayı fakülte/bölüm kodu ile genişletebilirsin)
+
+            string connectionString = ConfigurationManager.ConnectionStrings["UniversiteDB"].ConnectionString;
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = @"SELECT MAX(SUBSTRING(kullanici_no, 3, 7))
+                                 FROM Kullanicilar
+                                 WHERE kullanici_no LIKE @prefix";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    string prefix = yy + "%";
+                    cmd.Parameters.AddWithValue("@prefix", prefix);
+
+                    object result = cmd.ExecuteScalar();
+                    int lastSeq = 0;
+                    if (result != DBNull.Value && result != null)
+                    {
+                        int.TryParse(result.ToString(), out lastSeq);
+                    }
+
+                    int nextSeq = lastSeq + 1;
+                    string seqPart = nextSeq.ToString("D7");
+                    return yy + seqPart;
+                }
             }
         }
 

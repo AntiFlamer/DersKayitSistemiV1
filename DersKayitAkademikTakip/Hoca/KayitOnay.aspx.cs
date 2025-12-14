@@ -25,7 +25,7 @@ namespace DersKayitAkademikTakip.Hoca
             {
                 conn.Open();
                 string sql = @"SELECT k.kayit_id, k.ders_kodu, d.ders_adi, k.kayit_tarihi,
-                                       CONCAT(o.ad, ' ', o.soyad) AS ogrenci_adi
+                                       CONCAT(o.ad, ' ', o.soyad, ' (', IFNULL(o.kullanici_no,''), ')') AS ogrenci_adi
                                 FROM Kayitlar k
                                 INNER JOIN Dersler d ON k.ders_kodu = d.ders_kodu
                                 INNER JOIN Kullanicilar o ON k.ogrenci_id = o.kullanici_id

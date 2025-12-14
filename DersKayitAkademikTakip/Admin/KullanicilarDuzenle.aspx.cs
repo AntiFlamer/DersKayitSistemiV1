@@ -36,7 +36,7 @@ namespace DersKayitAkademikTakip.Admin
             {
                 conn.Open();
 
-                string query = @"SELECT kullanici_id, tc_kimlik, ad, soyad, email, rol, aktif 
+                string query = @"SELECT kullanici_id, tc_kimlik, ad, soyad, email, rol, aktif, kullanici_no 
                                FROM Kullanicilar 
                                WHERE kullanici_id = @id";
 
@@ -54,6 +54,7 @@ namespace DersKayitAkademikTakip.Admin
                         txtEmail.Text = reader["email"].ToString();
                         ddlRol.SelectedValue = reader["rol"].ToString();
                         chkAktif.Checked = Convert.ToBoolean(reader["aktif"]);
+                        txtKullaniciNo.Text = reader["kullanici_no"].ToString();
                     }
                     else
                     {
@@ -82,27 +83,24 @@ namespace DersKayitAkademikTakip.Admin
                 {
                     conn.Open();
 
-                    string query = @"UPDATE Kullanicilar 
-                                   SET ad = @ad, 
-                                       soyad = @soyad, 
-                                       email = @email, 
-                                       rol = @rol, 
-                                       aktif = @aktif";
-
+                    string sifreKismi = string.Empty;
                     if (!string.IsNullOrWhiteSpace(txtSifre.Text))
                     {
-                        query += ", sifre = @sifre";
+                        sifreKismi = ", sifre = @sifre";
                     }
 
-                    query += " WHERE kullanici_id = @id";
+                    string query = @"UPDATE Kullanicilar 
+                                     SET ad = @ad, soyad = @soyad, email = @email, rol = @rol, aktif = @aktif, kullanici_no = @kno" + sifreKismi +
+                                   " WHERE kullanici_id = @id";
 
                     MySqlCommand cmd = new MySqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@id", Convert.ToInt32(ViewState["kullanici_id"]));
                     cmd.Parameters.AddWithValue("@ad", txtAd.Text.Trim());
                     cmd.Parameters.AddWithValue("@soyad", txtSoyad.Text.Trim());
                     cmd.Parameters.AddWithValue("@email", txtEmail.Text.Trim());
                     cmd.Parameters.AddWithValue("@rol", ddlRol.SelectedValue);
                     cmd.Parameters.AddWithValue("@aktif", chkAktif.Checked);
+                    cmd.Parameters.AddWithValue("@kno", string.IsNullOrWhiteSpace(txtKullaniciNo.Text) ? (object)DBNull.Value : txtKullaniciNo.Text.Trim());
+                    cmd.Parameters.AddWithValue("@id", Convert.ToInt32(ViewState["kullanici_id"]));
 
                     if (!string.IsNullOrWhiteSpace(txtSifre.Text))
                     {
@@ -114,26 +112,15 @@ namespace DersKayitAkademikTakip.Admin
                     if (result > 0)
                     {
                         SuccessPanel.Visible = true;
-                        SuccessText.Text = "Kullanýcý baþarýyla güncellendi! Yönlendiriliyorsunuz...";
-                        Response.AddHeader("REFRESH", "2;URL=Kullanicilar.aspx");
+                        ErrorPanel.Visible = false;
+                        SuccessText.Text = "Kullanýcý baþarýyla güncellendi!";
                     }
-                }
-            }
-            catch (MySqlException mysqlEx)
-            {
-                ErrorPanel.Visible = true;
-                if (mysqlEx.Number == 1062)
-                {
-                    ErrorText.Text = "Bu e-posta adresi zaten kullanýlýyor!";
-                }
-                else
-                {
-                    ErrorText.Text = "Veritabaný hatasý: " + mysqlEx.Message;
                 }
             }
             catch (Exception ex)
             {
                 ErrorPanel.Visible = true;
+                SuccessPanel.Visible = false;
                 ErrorText.Text = "Hata: " + ex.Message;
             }
         }

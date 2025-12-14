@@ -246,6 +246,7 @@
     <Content Include="Global.asax" />
     <Content Include="Account\Web.config" />
     <Content Include="Hoca\Default.aspx" />
+    <Content Include="Hoca\DersIstatistik.aspx" />
     <Content Include="Hoca\KayitOnay.aspx" />
     <Content Include="Hoca\NotGirisi.aspx" />
     <Content Include="Ogrenci\Default.aspx" />
@@ -502,6 +503,13 @@
     </Compile>
     <Compile Include="Hoca\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Hoca\DersIstatistik.aspx.cs">
+      <DependentUpon>DersIstatistik.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Hoca\DersIstatistik.aspx.designer.cs">
+      <DependentUpon>DersIstatistik.aspx</DependentUpon>
     </Compile>
     <Compile Include="Hoca\HocaBasePage.cs">
       <SubType>ASPXCodeBehind</SubType>

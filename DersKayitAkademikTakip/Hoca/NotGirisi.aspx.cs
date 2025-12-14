@@ -68,7 +68,7 @@ namespace DersKayitAkademikTakip.Hoca
                 conn.Open();
                 string sql = @"SELECT 
                                     k.ogrenci_id,
-                                    CONCAT(o.ad, ' ', o.soyad) AS ogrenci_adi,
+                                    CONCAT(o.ad, ' ', o.soyad, ' (', IFNULL(o.kullanici_no,''), ')') AS ogrenci_adi,
                                     n.vize_notu,
                                     n.final_notu,
                                     n.butunleme_notu,

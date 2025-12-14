@@ -21,12 +21,17 @@
                         </asp:Panel>
 
                         <div class="row mb-3">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <label class="form-label">TC Kimlik No <span class="text-danger">*</span></label>
                                 <asp:TextBox ID="txtTC" runat="server" CssClass="form-control bg-light" ReadOnly="true" MaxLength="11" />
                                 <small class="text-muted">TC Kimlik numarasý deðiþtirilemez</small>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
+                                <label class="form-label">Kullanýcý Numarasý</label>
+                                <asp:TextBox ID="txtKullaniciNo" runat="server" CssClass="form-control" MaxLength="9" />
+                                <small class="text-muted">Boþsa otomatik atanmýþ olmayabilir; format: YYxxxxxxx</small>
+                            </div>
+                            <div class="col-md-4">
                                 <label class="form-label">E-posta <span class="text-danger">*</span></label>
                                 <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control" TextMode="Email" />
                             </div>

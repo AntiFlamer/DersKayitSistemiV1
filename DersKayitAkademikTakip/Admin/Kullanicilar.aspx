@@ -54,6 +54,7 @@
                             EmptyDataText="Kullanıcı bulunamadı.">
                             <Columns>
                                 <asp:BoundField DataField="kullanici_id" HeaderText="ID" ItemStyle-Width="50px" />
+                                <asp:BoundField DataField="kullanici_no" HeaderText="Numara" />
                                 <asp:BoundField DataField="tc_kimlik" HeaderText="TC Kimlik" />
                                 <asp:BoundField DataField="ad" HeaderText="Ad" />
                                 <asp:BoundField DataField="soyad" HeaderText="Soyad" />

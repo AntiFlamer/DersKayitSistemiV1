@@ -15,15 +15,15 @@ namespace DersKayitAkademikTakip.Account
 
         protected void LogIn(object sender, EventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine($"=== LOGIN BUTON CLICK ===");
-            System.Diagnostics.Debug.WriteLine($"Email: {Email.Text}");
+            System.Diagnostics.Debug.WriteLine("=== LOGIN BUTON CLICK ===");
+            System.Diagnostics.Debug.WriteLine($"Giris: {Email.Text}");
             System.Diagnostics.Debug.WriteLine($"Current URL: {Request.Url}");
 
             if (IsValid)
             {
                 if (MySQLGirisKontrol(Email.Text, Password.Text))
                 {
-                    System.Diagnostics.Debug.WriteLine($"=== LOGIN SUCCESS ===");
+                    System.Diagnostics.Debug.WriteLine("=== LOGIN SUCCESS ===");
                     KullaniciBilgileriniSessionaKaydet(Email.Text);
 
                     // Rol bazlı yönlendirme
@@ -52,13 +52,13 @@ namespace DersKayitAkademikTakip.Account
                 }
                 else
                 {
-                    FailureText.Text = "Geçersiz e-posta veya şifre!";
+                    FailureText.Text = "Geçersiz e-posta/numara veya şifre!";
                     ErrorMessage.Visible = true;
                 }
             }
         }
 
-        private bool MySQLGirisKontrol(string email, string sifre)
+        private bool MySQLGirisKontrol(string girisDegeri, string sifre)
         {
             try
             {
@@ -67,10 +67,13 @@ namespace DersKayitAkademikTakip.Account
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
                     conn.Open();
-                    string query = "SELECT COUNT(*) FROM Kullanicilar WHERE email = @email AND sifre = @sifre AND aktif = 1";
+                    string query = @"SELECT COUNT(*) FROM Kullanicilar 
+                                     WHERE aktif = 1 
+                                       AND sifre = @sifre
+                                       AND (email = @giris OR kullanici_no = @giris)";
 
                     MySqlCommand cmd = new MySqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@email", email);
+                    cmd.Parameters.AddWithValue("@giris", girisDegeri);
                     cmd.Parameters.AddWithValue("@sifre", sifre);
 
                     int count = Convert.ToInt32(cmd.ExecuteScalar());
@@ -84,7 +87,7 @@ namespace DersKayitAkademikTakip.Account
             }
         }
 
-        private void KullaniciBilgileriniSessionaKaydet(string email)
+        private void KullaniciBilgileriniSessionaKaydet(string girisDegeri)
         {
             try
             {
@@ -93,10 +96,13 @@ namespace DersKayitAkademikTakip.Account
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
                     conn.Open();
-                    string query = "SELECT kullanici_id, ad, soyad, rol FROM Kullanicilar WHERE email = @email";
+                    string query = @"SELECT kullanici_id, ad, soyad, rol, email, kullanici_no
+                                     FROM Kullanicilar
+                                     WHERE email = @giris OR kullanici_no = @giris
+                                     LIMIT 1";
 
                     MySqlCommand cmd = new MySqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@email", email);
+                    cmd.Parameters.AddWithValue("@giris", girisDegeri);
 
                     using (var reader = cmd.ExecuteReader())
                     {
@@ -106,7 +112,8 @@ namespace DersKayitAkademikTakip.Account
                             Session["Ad"] = reader["ad"];
                             Session["Soyad"] = reader["soyad"];
                             Session["Rol"] = reader["rol"];
-                            Session["Email"] = email;
+                            Session["Email"] = reader["email"];
+                            Session["KullaniciNo"] = reader["kullanici_no"];
 
                             System.Diagnostics.Debug.WriteLine($"SESSION KAYDEDİLDİ: {Session["Rol"]} - {Session["Ad"]}");
                         }

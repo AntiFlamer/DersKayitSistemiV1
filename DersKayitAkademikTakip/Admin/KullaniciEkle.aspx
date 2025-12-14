@@ -66,6 +66,16 @@
                             </div>
                         </div>
 
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Kullanıcı Numarası</label>
+                                    <asp:TextBox ID="txtKullaniciNo" runat="server" CssClass="form-control" MaxLength="9" placeholder="Otomatik (ör: 250000001)" ReadOnly="true" />
+                                    <small class="text-muted">Numara kayıttan sonra otomatik atanır (YY + 7 haneli sıra).</small>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
                             <asp:Button ID="btnGeri" runat="server" Text="Geri" CssClass="btn btn-secondary me-md-2" 
                                        PostBackUrl="~/Admin/Default.aspx" />

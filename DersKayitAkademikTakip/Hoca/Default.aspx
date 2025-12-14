@@ -51,8 +51,8 @@
             <div class="col-md-12">
                 <h4>Hýzlý Eriþim</h4>
                 <div class="d-grid gap-2 d-md-block">
-                    <a href="Default.aspx" class="btn btn-primary me-2">
-                        <i class="fas fa-list"></i> Verdiðim Dersler
+                    <a href="DersIstatistik.aspx" class="btn btn-primary me-2">
+                        <i class="fas fa-chart-bar"></i> Verdiðim Dersler (Ýstatistik)
                     </a>
                     <a href="KayitOnay.aspx" class="btn btn-success me-2">
                         <i class="fas fa-user-check"></i> Kayýt Onay
@@ -90,7 +90,7 @@
             </div>
         </div>
 
-        <!-- VERDÝÐÝM DERSLER -->
+        <!-- VERDÝÐÝM DERSLER (liste) -->
         <div class="row mt-4">
             <div class="col-md-12">
                 <div class="card shadow">
