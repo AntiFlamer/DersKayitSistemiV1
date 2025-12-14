@@ -2,7 +2,12 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <div class="container-fluid mt-4">
-        <h2><i class="fas fa-clipboard-list"></i> Not Giriþi</h2>
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 class="mb-0"><i class="fas fa-clipboard-list"></i> Not Giriþi</h2>
+            <a href="Default.aspx" class="btn btn-light btn-sm">
+                <i class="fas fa-arrow-left"></i> Geri
+            </a>
+        </div>
         <hr />
 
         <div class="row mb-3">
