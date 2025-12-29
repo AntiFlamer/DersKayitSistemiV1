@@ -362,5 +362,5 @@ Bu proje egitim amacli gelistirilmistir. Kullanim kosullari icin repo sahibiyle 
 </p>
 
 <p align="center">
-  Bu projeyi begendinizse yildiz vermeyi unutmayin!
+  Bu projeyi begendiyseniz yildiz vermeyi unutmayin!
 </p>
