@@ -21,7 +21,6 @@
 </head>
 <body>
     <form runat="server">
-        <!-- SADELEŞTİRİLMİŞ SCRIPTMANAGER -->
         <asp:ScriptManager runat="server">
             <Scripts>
                 <asp:ScriptReference Name="MsAjaxBundle" />

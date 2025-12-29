@@ -19,7 +19,7 @@ input[type="password"],
 input[type="email"],
 input[type="tel"],
 input[type="select"] {
-    max-width: 280px;
+    max-width: 100%;
 }
 
 /* Responsive: Portrait tablets and up */
@@ -27,4 +27,233 @@ input[type="select"] {
     .body-content {
         padding: 0;
     }
+}
+
+/* =====================================================
+   CUSTOM STYLES - Üniversite Ders Kayıt Sistemi
+   ===================================================== */
+
+/* Hero Section Styles */
+.bg-light.rounded-3 {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%) !important;
+}
+
+/* Feature Icon Animation */
+.feature-icon {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-icon:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+/* Card Hover Effects */
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important;
+}
+
+/* Button Styles */
+.btn {
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+/* Navbar Enhancements */
+.navbar {
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.navbar-brand {
+    font-weight: 600;
+    font-size: 1.25rem;
+}
+
+.nav-link {
+    transition: color 0.3s ease;
+}
+
+/* Footer Styles */
+footer {
+    padding: 20px 0;
+    text-align: center;
+    color: #6c757d;
+    border-top: 1px solid #dee2e6;
+    margin-top: 30px;
+}
+
+/* Accordion Styles */
+.accordion-button:not(.collapsed) {
+    background-color: #e7f1ff;
+    color: #0c63e4;
+}
+
+.accordion-button:focus {
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+/* Alert Styles */
+.alert {
+    border-radius: 10px;
+}
+
+/* Badge Styles in List */
+.list-group-item .badge {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Dark Section Background */
+.bg-dark.rounded-3 {
+    background: linear-gradient(135deg, #212529 0%, #343a40 100%) !important;
+}
+
+/* Form Input Focus States */
+.form-control:focus,
+.form-select:focus {
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+/* Card Header Styles */
+.card-header {
+    font-weight: 600;
+}
+
+/* Icon Circle Styles */
+.rounded-circle {
+    flex-shrink: 0;
+}
+
+/* Loading Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+main > section {
+    animation: fadeIn 0.5s ease forwards;
+}
+
+main > section:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+main > section:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+main > section:nth-child(4) {
+    animation-delay: 0.3s;
+}
+
+/* Panel Button Styles (Navbar) */
+.navbar .btn {
+    font-size: 0.85rem;
+    padding: 0.375rem 0.75rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 767.98px) {
+    .display-4 {
+        font-size: 2rem;
+    }
+    
+    .display-5 {
+        font-size: 1.75rem;
+    }
+    
+    .navbar .d-flex {
+        flex-direction: column;
+        gap: 10px !important;
+    }
+    
+    .navbar .btn {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+}
+
+/* Table Styles for Admin/Hoca/Ogrenci panels */
+.table {
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.table thead th {
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #dee2e6;
+    font-weight: 600;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f1f3f5;
+}
+
+/* Status Badge Colors */
+.badge-beklemede {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+.badge-onaylandi {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.badge-reddedildi {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+/* Panel Cards */
+.panel-card {
+    border-left: 4px solid #0d6efd;
+}
+
+.panel-card.success {
+    border-left-color: #198754;
+}
+
+.panel-card.warning {
+    border-left-color: #ffc107;
+}
+
+.panel-card.danger {
+    border-left-color: #dc3545;
+}
+
+/* Quick Stats */
+.stat-card {
+    text-align: center;
+    padding: 20px;
+}
+
+.stat-card .stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.stat-card .stat-label {
+    font-size: 0.875rem;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
