@@ -14,11 +14,8 @@
                     Ders seçiminden not takibine kadar tüm işlemlerinizi tek bir yerden yönetin.
                 </p>
                 <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                    <a href="Account/Login.aspx" class="btn btn-primary btn-lg px-4 gap-3">
+                    <a href="Account/Login.aspx" class="btn btn-primary btn-lg px-4">
                         <i class="fas fa-sign-in-alt me-2"></i>Giriş Yap
-                    </a>
-                    <a href="About.aspx" class="btn btn-outline-secondary btn-lg px-4">
-                        <i class="fas fa-info-circle me-2"></i>Daha Fazla Bilgi
                     </a>
                 </div>
             </div>
@@ -173,9 +170,6 @@
                             <div class="d-flex flex-wrap justify-content-center gap-3">
                                 <a href="Account/Login.aspx" class="btn btn-outline-primary btn-lg">
                                     <i class="fas fa-sign-in-alt me-2"></i>Giriş Yap
-                                </a>
-                                <a href="About.aspx" class="btn btn-outline-info btn-lg">
-                                    <i class="fas fa-info-circle me-2"></i>Hakkımızda
                                 </a>
                                 <a href="Contact.aspx" class="btn btn-outline-success btn-lg">
                                     <i class="fas fa-envelope me-2"></i>İletişim
