@@ -170,7 +170,7 @@ namespace DersKayitAkademikTakip.Admin
                             txtDonemBaslangic.Text = TarihFormatla(reader["donem_baslangic"]);
                             txtDonemBitis.Text = TarihFormatla(reader["donem_bitis"]);
 
-                            chkAktif.Checked = Convert.ToBoolean(reader["aktif"]);
+                            chkAktifInput.Checked = Convert.ToBoolean(reader["aktif"]);
 
                             btnSil.Visible = true;
                         }
@@ -214,7 +214,7 @@ namespace DersKayitAkademikTakip.Admin
             txtDonemBaslangic.Text = "";
             txtDonemBitis.Text = "";
 
-            chkAktif.Checked = false;
+            chkAktifInput.Checked = false;
             btnSil.Visible = false;
             gvTakvimler.SelectedIndex = -1;
         }
@@ -238,7 +238,7 @@ namespace DersKayitAkademikTakip.Admin
                     conn.Open();
 
                     // Eðer aktif yapýlacaksa, diðerlerini pasif yap
-                    if (chkAktif.Checked)
+                    if (chkAktifInput.Checked)
                     {
                         using (var deaktif = new MySqlCommand("UPDATE akademiktakvim SET aktif = 0 WHERE aktif = 1", conn))
                         {
@@ -302,7 +302,7 @@ namespace DersKayitAkademikTakip.Admin
                         cmd.Parameters.AddWithValue("@donemBaslangic", ParseDate(txtDonemBaslangic.Text));
                         cmd.Parameters.AddWithValue("@donemBitis", ParseDate(txtDonemBitis.Text));
                         
-                        cmd.Parameters.AddWithValue("@aktif", chkAktif.Checked ? 1 : 0);
+                        cmd.Parameters.AddWithValue("@aktif", chkAktifInput.Checked ? 1 : 0);
                         
                         if (takvimId > 0)
                             cmd.Parameters.AddWithValue("@id", takvimId);

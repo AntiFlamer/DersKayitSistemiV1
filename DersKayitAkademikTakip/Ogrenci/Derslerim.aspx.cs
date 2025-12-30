@@ -19,7 +19,24 @@ namespace DersKayitAkademikTakip.Ogrenci
 
             if (!IsPostBack)
             {
+                // Akademik takvim kontrolü
+                TakvimDurumunuKontrolEt();
                 KayitlariYukle();
+            }
+        }
+
+        /// <summary>
+        /// Ders kaydý/iptal döneminin açýk olup olmadýðýný kontrol eder
+        /// </summary>
+        private void TakvimDurumunuKontrolEt()
+        {
+            var sonuc = AkademikTakvimHelper.DersKaydiKontrol();
+            
+            if (!sonuc.Acik)
+            {
+                // Ders kayýt/iptal dönemi kapalý - uyarý göster
+                pnlUyari.Visible = true;
+                lblUyari.Text = "<i class='fas fa-calendar-times'></i> " + sonuc.Mesaj + "<br/><small>Bu dönemde ders kaydý yapamaz veya iptal edemezsiniz.</small>";
             }
         }
 
@@ -32,10 +49,10 @@ namespace DersKayitAkademikTakip.Ogrenci
                 conn.Open();
                 string sql = @"SELECT k.kayit_id, k.ders_kodu, d.ders_adi, d.kredi, k.durum,
                                       CASE k.durum 
-                                          WHEN 'onaylandi' THEN '<span class=\'badge bg-success\'>Onaylandý</span>'
-                                          WHEN 'onay_bekliyor' THEN '<span class=\'badge bg-warning\'>Onay Bekliyor</span>'
-                                          WHEN 'reddedildi' THEN '<span class=\'badge bg-danger\'>Reddedildi</span>'
-                                          ELSE CONCAT('<span class=\'badge bg-secondary\'>', k.durum, '</span>')
+                                          WHEN 'onaylandi' THEN '<span class=''badge bg-success''>Onaylandý</span>'
+                                          WHEN 'onay_bekliyor' THEN '<span class=''badge bg-warning''>Onay Bekliyor</span>'
+                                          WHEN 'reddedildi' THEN '<span class=''badge bg-danger''>Reddedildi</span>'
+                                          ELSE CONCAT('<span class=''badge bg-secondary''>', k.durum, '</span>')
                                       END AS durum_label
                                FROM Kayitlar k
                                INNER JOIN Dersler d ON k.ders_kodu = d.ders_kodu
@@ -47,16 +64,25 @@ namespace DersKayitAkademikTakip.Ogrenci
                     var da = new MySqlDataAdapter(cmd);
                     var dt = new DataTable();
                     da.Fill(dt);
-                    gvKayýtlar.DataSource = dt;
-                    gvKayýtlar.DataBind();
+                    gvKayitlar.DataSource = dt;
+                    gvKayitlar.DataBind();
                 }
             }
         }
 
-        protected void gvKayýtlar_RowCommand(object sender, GridViewCommandEventArgs e)
+        protected void gvKayitlar_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName == "Iptal")
             {
+                // ÖNCELÝKLE AKADEMÝK TAKVÝM KONTROLÜ
+                var takvimSonuc = AkademikTakvimHelper.DersKaydiKontrol();
+                if (!takvimSonuc.Acik)
+                {
+                    pnlHata.Visible = true;
+                    lblHata.Text = "<i class='fas fa-calendar-times'></i> " + takvimSonuc.Mesaj + "<br/><small>Ders kayýt dönemi dýþýnda kayýt iptal iþlemi yapýlamaz.</small>";
+                    return;
+                }
+
                 int kayitId = Convert.ToInt32(e.CommandArgument);
                 KaydiIptalEt(kayitId);
                 KayitlariYukle();
@@ -76,7 +102,14 @@ namespace DersKayitAkademikTakip.Ogrenci
                 {
                     cmd.Parameters.AddWithValue("@id", kayitId);
                     cmd.Parameters.AddWithValue("@o", ogrenciId);
-                    cmd.ExecuteNonQuery();
+                    int affected = cmd.ExecuteNonQuery();
+                    
+                    if (affected > 0)
+                    {
+                        pnlBasari.Visible = true;
+                        lblBasari.Text = "<i class='fas fa-check-circle'></i> Ders kaydý baþarýyla iptal edildi.";
+                        pnlHata.Visible = false;
+                    }
                 }
             }
         }

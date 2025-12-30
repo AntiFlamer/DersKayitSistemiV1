@@ -29,7 +29,7 @@ namespace DersKayitAkademikTakip.Admin
         protected global::System.Web.UI.WebControls.TextBox txtButunlemeNotGirisBitis;
         protected global::System.Web.UI.WebControls.TextBox txtDonemBaslangic;
         protected global::System.Web.UI.WebControls.TextBox txtDonemBitis;
-        protected global::System.Web.UI.WebControls.CheckBox chkAktif;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox chkAktifInput;
         protected global::System.Web.UI.WebControls.Button btnKaydet;
         protected global::System.Web.UI.WebControls.Button btnSil;
         protected global::System.Web.UI.WebControls.Button btnIptal;

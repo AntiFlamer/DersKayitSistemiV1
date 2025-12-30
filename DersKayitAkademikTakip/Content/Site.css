@@ -170,6 +170,102 @@ main > section:nth-child(4) {
     padding: 0.375rem 0.75rem;
 }
 
+/* =====================================================
+   NAVBAR CUSTOM BUTTON STYLES
+   ===================================================== */
+
+/* Navbar User Section */
+.navbar-user-section {
+    gap: 10px;
+}
+
+/* Base Navigation Button Style */
+.nav-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.25s ease;
+    border: none;
+    margin-left: 8px;
+}
+
+.nav-btn:hover {
+    transform: translateY(-1px);
+    text-decoration: none;
+}
+
+/* Admin Panel Button */
+.nav-btn-admin {
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    color: #fff !important;
+    box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
+}
+
+.nav-btn-admin:hover {
+    background: linear-gradient(135deg, #c82333 0%, #bd2130 100%);
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
+    color: #fff !important;
+}
+
+/* Hoca Panel Button */
+.nav-btn-hoca {
+    background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%);
+    color: #fff !important;
+    box-shadow: 0 2px 8px rgba(13, 110, 253, 0.3);
+}
+
+.nav-btn-hoca:hover {
+    background: linear-gradient(135deg, #0b5ed7 0%, #0a58ca 100%);
+    box-shadow: 0 4px 12px rgba(13, 110, 253, 0.4);
+    color: #fff !important;
+}
+
+/* Öğrenci Panel Button */
+.nav-btn-ogrenci {
+    background: linear-gradient(135deg, #198754 0%, #157347 100%);
+    color: #fff !important;
+    box-shadow: 0 2px 8px rgba(25, 135, 84, 0.3);
+}
+
+.nav-btn-ogrenci:hover {
+    background: linear-gradient(135deg, #157347 0%, #146c43 100%);
+    box-shadow: 0 4px 12px rgba(25, 135, 84, 0.4);
+    color: #fff !important;
+}
+
+/* Logout Button */
+.nav-btn-logout {
+    background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+    color: #fff !important;
+    box-shadow: 0 2px 8px rgba(108, 117, 125, 0.3);
+}
+
+.nav-btn-logout:hover {
+    background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+    color: #212529 !important;
+    box-shadow: 0 4px 12px rgba(255, 193, 7, 0.4);
+}
+
+/* Login Link Style */
+.nav-btn-login {
+    background: transparent;
+    border: 2px solid #0d6efd;
+    color: #0d6efd !important;
+    padding: 6px 16px;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.25s ease;
+}
+
+.nav-btn-login:hover {
+    background: #0d6efd;
+    color: #fff !important;
+}
+
 /* Responsive Adjustments */
 @media (max-width: 767.98px) {
     .display-4 {
@@ -188,6 +284,25 @@ main > section:nth-child(4) {
     .navbar .btn {
         width: 100%;
         margin-bottom: 5px;
+    }
+    
+    .navbar-user-section {
+        flex-direction: column;
+        align-items: stretch !important;
+        gap: 8px !important;
+        padding: 10px 0;
+    }
+    
+    .nav-btn {
+        width: 100%;
+        justify-content: center;
+        margin-left: 0;
+        margin-bottom: 5px;
+    }
+    
+    .navbar-text {
+        text-align: center;
+        margin-bottom: 10px;
     }
 }
 

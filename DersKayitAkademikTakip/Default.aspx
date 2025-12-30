@@ -17,6 +17,9 @@
                     <a href="Account/Login.aspx" class="btn btn-primary btn-lg px-4">
                         <i class="fas fa-sign-in-alt me-2"></i>Giriş Yap
                     </a>
+                    <a href="AkademikTakvimGoruntule.aspx" class="btn btn-outline-secondary btn-lg px-4">
+                        <i class="fas fa-calendar-alt me-2"></i>Akademik Takvim
+                    </a>
                 </div>
             </div>
         </section>
@@ -164,12 +167,15 @@
                 <i class="fas fa-bolt text-warning me-2"></i>Hızlı Erişim
             </h2>
             <div class="row justify-content-center">
-                <div class="col-md-8">
+                <div class="col-md-10">
                     <div class="card border-0 shadow">
                         <div class="card-body p-4">
                             <div class="d-flex flex-wrap justify-content-center gap-3">
                                 <a href="Account/Login.aspx" class="btn btn-outline-primary btn-lg">
                                     <i class="fas fa-sign-in-alt me-2"></i>Giriş Yap
+                                </a>
+                                <a href="AkademikTakvimGoruntule.aspx" class="btn btn-outline-info btn-lg">
+                                    <i class="fas fa-calendar-alt me-2"></i>Akademik Takvim
                                 </a>
                                 <a href="Contact.aspx" class="btn btn-outline-success btn-lg">
                                     <i class="fas fa-envelope me-2"></i>İletişim

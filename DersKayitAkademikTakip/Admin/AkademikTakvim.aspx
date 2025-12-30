@@ -177,8 +177,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-check form-switch">
-                                    <asp:CheckBox ID="chkAktif" runat="server" CssClass="form-check-input" />
-                                    <label class="form-check-label">Bu takvimi aktif yap (diðer takvimler pasif olur)</label>
+                                    <input type="checkbox" class="form-check-input" id="chkAktifInput" runat="server" />
+                                    <label class="form-check-label" for="<%=chkAktifInput.ClientID %>">Bu takvimi aktif yap (diðer takvimler pasif olur)</label>
                                 </div>
                             </div>
                         </div>

@@ -224,6 +224,7 @@
     <Content Include="Admin\KullaniciEkle.aspx" />
     <Content Include="Admin\Kullanicilar.aspx" />
     <Content Include="Admin\KullanicilarDuzenle.aspx" />
+    <Content Include="AkademikTakvimGoruntule.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
@@ -484,8 +485,14 @@
     <Compile Include="Admin\KullanicilarDuzenle.aspx.designer.cs">
       <DependentUpon>KullanicilarDuzenle.aspx</DependentUpon>
     </Compile>
+    <Compile Include="AkademikTakvimGoruntule.aspx.cs">
+      <DependentUpon>AkademikTakvimGoruntule.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AkademikTakvimGoruntule.aspx.designer.cs">
+      <DependentUpon>AkademikTakvimGoruntule.aspx</DependentUpon>
+    </Compile>
     <Compile Include="AkademikTakvimHelper.cs" />
-    <Content Include="App_Code\AkademikTakvimHelper.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />

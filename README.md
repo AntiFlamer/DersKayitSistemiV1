@@ -59,6 +59,10 @@
   - Yeni ders ekleme
   - Ders duzenleme ve silme
   - Ogretim gorevlisi atama
+- **Akademik Takvim**
+  - Akademik donem kaynakli tarih araliklarini merkezi olarak yonetme
+  - Aktif donem tanimlama (tek aktif kayit)
+  - Admin dashboard uzerinden surec durumlarini (ders kayit / not girisi) gosterme
 - **Dashboard**
   - Toplam kullanici, ders ve kayit istatistikleri
   - Rol bazli kullanici dagilimi
@@ -111,56 +115,59 @@
 ```
 DersKayitAkademikTakip/
 |-- Account/
-|   |-- Login.aspx(.cs)           # Giris sayfasi
-|   +-- Logout.aspx(.cs)          # Cikis islemi
+|   |-- Login.aspx(.cs)                # Giris sayfasi
+|   +-- Logout.aspx(.cs)               # Cikis islemi
 |
 |-- Admin/
-|   |-- Default.aspx(.cs)         # Admin dashboard
-|   |-- Kullanicilar.aspx(.cs)    # Kullanici listesi
-|   |-- KullaniciEkle.aspx(.cs)   # Yeni kullanici ekleme
-|   |-- KullanicilarDuzenle.aspx(.cs) # Kullanici duzenleme
-|   |-- Dersler.aspx(.cs)         # Ders listesi
-|   |-- DersEkle.aspx(.cs)        # Yeni ders ekleme
-|   |-- DerslerDuzenle.aspx(.cs)  # Ders duzenleme
-|   |-- AdminBasePage.cs          # Admin sayfa base class
-|   +-- Web.config                # Admin klasor ayarlari
+|   |-- Default.aspx(.cs)              # Admin dashboard
+|   |-- AkademikTakvim.aspx(.cs)       # Akademik takvim CRUD
+|   |-- Kullanicilar.aspx(.cs)         # Kullanici listesi
+|   |-- KullaniciEkle.aspx(.cs)        # Yeni kullanici ekleme
+|   |-- KullanicilarDuzenle.aspx(.cs)  # Kullanici duzenleme
+|   |-- Dersler.aspx(.cs)              # Ders listesi
+|   |-- DersEkle.aspx(.cs)             # Yeni ders ekleme
+|   |-- DerslerDuzenle.aspx(.cs)       # Ders duzenleme
+|   |-- AdminBasePage.cs               # Admin sayfa base class
+|   +-- Web.config                     # Admin klasor ayarlari
 |
 |-- Hoca/
-|   |-- Default.aspx(.cs)         # Hoca dashboard
-|   |-- DersIstatistik.aspx(.cs)  # Ders istatistikleri
-|   |-- KayitOnay.aspx(.cs)       # Kayit onaylama
-|   |-- NotGirisi.aspx(.cs)       # Not girisi
-|   +-- HocaBasePage.cs           # Hoca sayfa base class
+|   |-- Default.aspx(.cs)              # Hoca dashboard
+|   |-- DersIstatistik.aspx(.cs)       # Ders istatistikleri
+|   |-- KayitOnay.aspx(.cs)            # Kayit onaylama
+|   |-- NotGirisi.aspx(.cs)            # Not girisi
+|   +-- HocaBasePage.cs                # Hoca sayfa base class
 |
 |-- Ogrenci/
-|   |-- Default.aspx(.cs)         # Ogrenci dashboard
-|   |-- DersKayit.aspx(.cs)       # Ders kaydi
-|   |-- Derslerim.aspx(.cs)       # Kayitli dersler
-|   +-- Notlarim.aspx(.cs)        # Not goruntuleme
+|   |-- Default.aspx(.cs)              # Ogrenci dashboard
+|   |-- DersKayit.aspx(.cs)            # Ders kaydi
+|   |-- Derslerim.aspx(.cs)            # Kayitli dersler
+|   +-- Notlarim.aspx(.cs)             # Not goruntuleme
 |
 |-- App_Code/
-|   +-- CustomRoleProvider.cs     # Ozel rol saglayici
+|   |-- AkademikTakvimHelper.cs         # Akademik takvim kontrolleri ve model
+|   +-- CustomRoleProvider.cs           # Ozel rol saglayici
 |
 |-- App_Start/
-|   |-- BundleConfig.cs           # Script/CSS bundle
-|   |-- RouteConfig.cs            # URL routing
-|   +-- IdentityConfig.cs         # Identity ayarlari
+|   |-- BundleConfig.cs                 # Script/CSS bundle
+|   |-- RouteConfig.cs                  # URL routing
+|   +-- IdentityConfig.cs               # Identity ayarlari
 |
 |-- Content/
-|   |-- bootstrap.min.css         # Bootstrap stilleri
-|   +-- Site.css                  # Ozel stiller
+|   |-- bootstrap.min.css               # Bootstrap stilleri
+|   +-- Site.css                        # Ozel stiller
 |
 |-- Scripts/
-|   |-- jquery-3.7.1.min.js       # jQuery
-|   +-- bootstrap.bundle.min.js   # Bootstrap JS
+|   |-- jquery-3.7.1.min.js             # jQuery
+|   +-- bootstrap.bundle.min.js         # Bootstrap JS
 |
-|-- Default.aspx(.cs)             # Ana sayfa
-|-- About.aspx(.cs)               # Hakkinda sayfasi
-|-- Contact.aspx(.cs)             # Iletisim sayfasi
-|-- Site.Master(.cs)              # Ana sablon
-|-- Web.config                    # Ana konfigurasyon
-|-- ConnectionStrings.config      # DB baglanti bilgileri
-+-- Global.asax(.cs)              # Uygulama yasam dongusu
+|-- AkademikTakvimGoruntule.aspx(.cs)   # Aktif akademik takvim goruntuleme
+|-- Default.aspx(.cs)                   # Ana sayfa
+|-- About.aspx(.cs)                     # Hakkinda sayfasi
+|-- Contact.aspx(.cs)                   # Iletisim sayfasi
+|-- Site.Master(.cs)                    # Ana sablon
+|-- Web.config                          # Ana konfigurasyon
+|-- ConnectionStrings.config            # DB baglanti bilgileri
++-- Global.asax(.cs)                    # Uygulama yasam dongusu
 ```
 
 ---
@@ -186,7 +193,7 @@ DersKayitAkademikTakip/
    - `DersKayitAkademikTakip.sln` dosyasini acin
 
 3. **Veritabani baglantisini ayarlayin**
-   
+
    `ConnectionStrings.config` dosyasini duzenleyin:
    ```xml
    <connectionStrings>
@@ -255,6 +262,37 @@ CREATE TABLE Kayitlar (
 );
 ```
 
+### Akademik Takvim Tablosu
+```sql
+CREATE TABLE akademiktakvim (
+    takvim_id INT AUTO_INCREMENT PRIMARY KEY,
+    donem_adi VARCHAR(100) NOT NULL,
+    akademik_yil VARCHAR(20) NOT NULL,
+    donem_tipi ENUM('Guz', 'Bahar', 'Yaz') NOT NULL,
+
+    ders_kayit_baslangic DATE NULL,
+    ders_kayit_bitis DATE NULL,
+
+    vize_baslangic DATE NULL,
+    vize_bitis DATE NULL,
+    vize_not_giris_bitis DATE NULL,
+
+    final_baslangic DATE NULL,
+    final_bitis DATE NULL,
+    final_not_giris_bitis DATE NULL,
+
+    butunleme_baslangic DATE NULL,
+    butunleme_bitis DATE NULL,
+    butunleme_not_giris_bitis DATE NULL,
+
+    donem_baslangic DATE NULL,
+    donem_bitis DATE NULL,
+
+    aktif TINYINT(1) DEFAULT 0,
+    olusturma_tarihi DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+```
+
 ### Ornek Veriler
 ```sql
 -- Admin kullanici
@@ -287,6 +325,7 @@ VALUES ('12345678903', 'Mehmet', 'Demir', 'mehmet.demir@universite.edu.tr', 'ogr
 - **Kullanici Duzenle**: Kullanicilar -> Duzenle butonu
 - **Ders Ekle**: Admin Panel -> Ders Ekle
 - **Ders Duzenle**: Dersler -> Duzenle butonu
+- **Akademik Takvim**: Admin Panel -> Akademik Takvim
 
 ### Ogretim Gorevlisi Islemleri
 - **Kayit Onaylama**: Hoca Panel -> Kayit Onay
@@ -300,20 +339,25 @@ VALUES ('12345678903', 'Mehmet', 'Demir', 'mehmet.demir@universite.edu.tr', 'ogr
 
 ## Ekran Goruntuleri
 
-> Ekran goruntuleri `docs/screenshots/` klasorune eklenebilir:
+Aþaðýda projenin çeþitli bölümlerine ait ekran görüntüleri yer almaktadýr:
 
-```
-docs/screenshots/
-|-- login.png
-|-- admin-dashboard.png
-|-- admin-kullanicilar.png
-|-- admin-dersler.png
-|-- hoca-dashboard.png
-|-- hoca-not-girisi.png
-|-- ogrenci-dashboard.png
-|-- ogrenci-ders-kayit.png
-+-- ana-sayfa.png
-```
+### 1. Giriþ Sayfasý
+![Login](docs/screenshots/01-login.png)
+
+### 2. Admin Dashboard
+![Admin Dashboard](docs/screenshots/02-admin-dashboard.png)
+
+### 3. Hoca Dashboard
+![Hoca Dashboard](docs/screenshots/03-hoca-dashboard.png)
+
+### 4. Ogrenci Dashboard
+![Ogrenci Dashboard](docs/screenshots/04-ogrenci-dashboard.png)
+
+### 5. Ders Kaydý
+![Ders Kaydý](docs/screenshots/05-ders-kaydi.png)
+
+### 6. Not Giriþi
+![Not Giriþi](docs/screenshots/06-not-girisi.png)
 
 ---
 

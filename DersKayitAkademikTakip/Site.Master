@@ -2,7 +2,7 @@
 
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="tr">
 <head runat="server">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,8 +13,10 @@
     </asp:PlaceHolder>
     
     <!-- Styles: use server-side resolution to avoid broken paths under virtual directories -->
-    <link runat="server" href="~/Content/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" />
+    <!-- bootstrap -->
+    <link runat="server" href="~/Content/bootstrap.min.css" rel="stylesheet" /> 
+    <!-- font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" /> 
     <link runat="server" href="~/Content/Site.css" rel="stylesheet" />
     <link runat="server" href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
@@ -32,50 +34,55 @@
 
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand" runat="server" href="~/">Üniversite Sistemi</a>
+                <a class="navbar-brand" runat="server" href="~/">
+                    <i class="fas fa-university me-2"></i>Üniversite Sistemi
+                </a>
                 <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/">Ana Sayfa</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/About.aspx">Hakkında</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Contact.aspx">İletişim</a></li>
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/"><i class="fas fa-home me-1"></i>Ana Sayfa</a></li>
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/AkademikTakvimGoruntule.aspx"><i class="fas fa-calendar-alt me-1"></i>Akademik Takvim</a></li>
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/About.aspx"><i class="fas fa-info-circle me-1"></i>Hakkında</a></li>
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Contact.aspx"><i class="fas fa-envelope me-1"></i>İletişim</a></li>
                     </ul>
             
                     <!-- GİRİŞ/DURUM BİLGİSİ -->
                     <ul class="navbar-nav navbar-right">
                         <li id="GirisLi" class="nav-item" runat="server">
-                            <a class="nav-link" runat="server" href="~/Account/Login.aspx">Giriş Yap</a>
+                            <a class="nav-link nav-btn-login" runat="server" href="~/Account/Login.aspx">
+                                <i class="fas fa-sign-in-alt me-1"></i>Giriş Yap
+                            </a>
                         </li>
                         <li id="KullaniciLi" class="nav-item" runat="server" visible="false">
-                            <div class="d-flex align-items-center" style="gap: 15px;">
-                                <span class="navbar-text text-light">
-                                    <i class="fas fa-user"></i> <span id="KullaniciAdi" runat="server"></span>
+                            <div class="d-flex align-items-center navbar-user-section">
+                                <span class="navbar-text text-light me-3">
+                                    <i class="fas fa-user-circle me-1"></i><span id="KullaniciAdi" runat="server"></span>
                                 </span>
             
                                 <!-- ROL BAZLI PANEL BUTONLARI -->
                                 <asp:Panel ID="AdminPanelButon" runat="server" Visible="false">
-                                    <a class="btn btn-outline-danger btn-sm" runat="server" href="~/Admin/Default.aspx">
-                                        <i class="fas fa-user-shield"></i> Admin Panel
+                                    <a class="nav-btn nav-btn-admin" runat="server" href="~/Admin/Default.aspx">
+                                        <i class="fas fa-user-shield me-1"></i>Admin Panel
                                     </a>
                                 </asp:Panel>
 
                                 <asp:Panel ID="HocaPanelButon" runat="server" Visible="false">
-                                    <a class="btn btn-outline-primary btn-sm" runat="server" href="~/Hoca/Default.aspx">
-                                        <i class="fas fa-chalkboard-teacher"></i> Öğretim Görevlisi Panel
+                                    <a class="nav-btn nav-btn-hoca" runat="server" href="~/Hoca/Default.aspx">
+                                        <i class="fas fa-chalkboard-teacher me-1"></i>Öğretim Görevlisi
                                     </a>
                                 </asp:Panel>
 
                                 <asp:Panel ID="OgrenciPanelButon" runat="server" Visible="false">
-                                    <a class="btn btn-outline-success btn-sm" runat="server" href="~/Ogrenci/Default.aspx">
-                                        <i class="fas fa-graduation-cap"></i> Öğrenci Panel
+                                    <a class="nav-btn nav-btn-ogrenci" runat="server" href="~/Ogrenci/Default.aspx">
+                                        <i class="fas fa-graduation-cap me-1"></i>Öğrenci Panel
                                     </a>
                                 </asp:Panel>
             
-                                <a class="btn btn-outline-warning btn-sm" runat="server" href="~/Account/Logout.aspx">
-                                    <i class="fas fa-sign-out-alt"></i> Çıkış
+                                <a class="nav-btn nav-btn-logout" runat="server" href="~/Account/Logout.aspx">
+                                    <i class="fas fa-sign-out-alt me-1"></i>Çıkış
                                 </a>
                             </div>
                         </li>
