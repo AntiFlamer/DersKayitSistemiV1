@@ -22,6 +22,9 @@ namespace DersKayitAkademikTakip.Hoca
     /// - Daha hizli islem
     /// - Kullanici scroll pozisyonunu kaybetmez
     /// - Profesyonel gorunum
+    /// 
+    /// AKADEMIK TAKVIM ENTEGRASYONU:
+    /// - Kayýt onayý sadece ders kayýt döneminde yapýlabilir
     /// </summary>
     public partial class KayitOnay : HocaBasePage
     {
@@ -29,7 +32,24 @@ namespace DersKayitAkademikTakip.Hoca
         {
             if (!IsPostBack)
             {
+                // Akademik takvim kontrolü
+                TakvimDurumunuKontrolEt();
                 KayitlariYukle();
+            }
+        }
+
+        /// <summary>
+        /// Kayýt onay döneminin açýk olup olmadýðýný kontrol eder
+        /// </summary>
+        private void TakvimDurumunuKontrolEt()
+        {
+            var sonuc = AkademikTakvimHelper.KayitOnayKontrol();
+            
+            if (!sonuc.Acik)
+            {
+                // Kayýt onay dönemi kapalý
+                ErrorPanel.Visible = true;
+                ErrorText.Text = "<i class='fas fa-calendar-times'></i> " + sonuc.Mesaj + " <br/><small>Kayýt onay iþlemleri þu an yapýlamaz.</small>";
             }
         }
 
@@ -87,6 +107,16 @@ namespace DersKayitAkademikTakip.Hoca
             // Sadece Onayla ve Reddet komutlarini isle
             if (e.CommandName != "Onayla" && e.CommandName != "Reddet")
                 return;
+
+            // ÖNCELÝKLE AKADEMÝK TAKVÝM KONTROLÜ
+            var takvimSonuc = AkademikTakvimHelper.KayitOnayKontrol();
+            if (!takvimSonuc.Acik)
+            {
+                SuccessPanel.Visible = false;
+                ErrorPanel.Visible = true;
+                ErrorText.Text = "<i class='fas fa-calendar-times'></i> " + takvimSonuc.Mesaj + " <br/><small>Kayýt onay iþlemleri þu an yapýlamaz.</small>";
+                return;
+            }
 
             int kayitId;
             if (!int.TryParse(e.CommandArgument.ToString(), out kayitId))

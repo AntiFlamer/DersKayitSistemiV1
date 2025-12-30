@@ -19,7 +19,30 @@ namespace DersKayitAkademikTakip.Ogrenci
 
             if (!IsPostBack)
             {
+                // Akademik takvim kontrolü
+                TakvimDurumunuKontrolEt();
                 DersleriYukle(null);
+            }
+        }
+
+        /// <summary>
+        /// Ders kaydý döneminin açýk olup olmadýðýný kontrol eder ve kullanýcýyý bilgilendirir
+        /// </summary>
+        private void TakvimDurumunuKontrolEt()
+        {
+            var sonuc = AkademikTakvimHelper.DersKaydiKontrol();
+            
+            if (!sonuc.Acik)
+            {
+                // Ders kaydý kapalý - uyarý göster ve kayýt butonlarýný devre dýþý býrak
+                ErrorPanel.Visible = true;
+                ErrorText.Text = "<i class='fas fa-calendar-times'></i> " + sonuc.Mesaj;
+            }
+            else
+            {
+                // Ders kaydý açýk - bilgi mesajý göster
+                SuccessPanel.Visible = true;
+                SuccessText.Text = "<i class='fas fa-calendar-check'></i> " + sonuc.Mesaj;
             }
         }
 
@@ -73,6 +96,16 @@ namespace DersKayitAkademikTakip.Ogrenci
 
         private void KayitOl(string dersKodu)
         {
+            // ÖNCELÝKLE AKADEMÝK TAKVÝM KONTROLÜ
+            var takvimSonuc = AkademikTakvimHelper.DersKaydiKontrol();
+            if (!takvimSonuc.Acik)
+            {
+                ErrorPanel.Visible = true;
+                SuccessPanel.Visible = false;
+                ErrorText.Text = "<i class='fas fa-calendar-times'></i> " + takvimSonuc.Mesaj;
+                return;
+            }
+
             string cs = ConfigurationManager.ConnectionStrings["UniversiteDB"].ConnectionString;
             int ogrenciId = Convert.ToInt32(Session["KullaniciID"]);
 

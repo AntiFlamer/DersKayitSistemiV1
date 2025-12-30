@@ -4,16 +4,72 @@ using System.Data;
 using System.Globalization;
 using System.Web.UI.WebControls;
 using MySql.Data.MySqlClient;
+using DersKayitAkademikTakip; // AkademikTakvimHelper için
 
 namespace DersKayitAkademikTakip.Hoca
 {
+    /// <summary>
+    /// Not Giriþi Sayfasý
+    /// 
+    /// AKADEMÝK TAKVÝM ENTEGRASYONU:
+    /// - Vize notu giriþi sadece vize döneminde yapýlabilir
+    /// - Final notu giriþi sadece final döneminde yapýlabilir
+    /// - Bütünleme notu giriþi sadece bütünleme döneminde yapýlabilir
+    /// </summary>
     public partial class NotGirisi : HocaBasePage
     {
+        // Tarih kontrol sonuçlarý - sayfa genelinde kullanýlacak
+        private TarihKontrolSonucu _vizeKontrol;
+        private TarihKontrolSonucu _finalKontrol;
+        private TarihKontrolSonucu _butunlemeKontrol;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
+                // Akademik takvim durumlarýný kontrol et
+                TakvimDurumlariniKontrolEt();
                 DersleriYukle();
+            }
+        }
+
+        /// <summary>
+        /// Not giriþ dönemlerinin açýk olup olmadýðýný kontrol eder ve kullanýcýyý bilgilendirir
+        /// </summary>
+        private void TakvimDurumlariniKontrolEt()
+        {
+            _vizeKontrol = AkademikTakvimHelper.VizeNotuGirisiKontrol();
+            _finalKontrol = AkademikTakvimHelper.FinalNotuGirisiKontrol();
+            _butunlemeKontrol = AkademikTakvimHelper.ButunlemeNotuGirisiKontrol();
+
+            // Dönem bilgisi
+            string donemBilgisi = AkademikTakvimHelper.AktifDonemBilgisi();
+
+            // Durum mesajý oluþtur
+            string durumMesaji = $"<strong>{donemBilgisi}</strong><br/><ul class='mb-0'>";
+            
+            // Vize durumu
+            durumMesaji += $"<li>Vize Notu Giriþi: {(_vizeKontrol.Acik ? "<span class='badge bg-success'>AÇIK</span>" : "<span class='badge bg-secondary'>KAPALI</span>")} - {_vizeKontrol.Mesaj}</li>";
+            
+            // Final durumu
+            durumMesaji += $"<li>Final Notu Giriþi: {(_finalKontrol.Acik ? "<span class='badge bg-success'>AÇIK</span>" : "<span class='badge bg-secondary'>KAPALI</span>")} - {_finalKontrol.Mesaj}</li>";
+            
+            // Bütünleme durumu
+            durumMesaji += $"<li>Bütünleme Notu Giriþi: {(_butunlemeKontrol.Acik ? "<span class='badge bg-success'>AÇIK</span>" : "<span class='badge bg-secondary'>KAPALI</span>")} - {_butunlemeKontrol.Mesaj}</li>";
+            
+            durumMesaji += "</ul>";
+
+            // Herhangi biri açýk deðilse uyarý göster
+            if (!_vizeKontrol.Acik && !_finalKontrol.Acik && !_butunlemeKontrol.Acik)
+            {
+                ErrorPanel.Visible = true;
+                ErrorText.Text = "<i class='fas fa-calendar-times'></i> Þu anda hiçbir not giriþ dönemi açýk deðil.<br/>" + durumMesaji;
+            }
+            else
+            {
+                // En az biri açýk - bilgi mesajý göster
+                SuccessPanel.Visible = true;
+                SuccessText.Text = "<i class='fas fa-calendar-check'></i> " + durumMesaji;
             }
         }
 
@@ -103,8 +159,24 @@ namespace DersKayitAkademikTakip.Hoca
             if (string.IsNullOrEmpty(ddlDersler.SelectedValue))
                 return;
 
+            // Tarih kontrollerini güncelle
+            _vizeKontrol = AkademikTakvimHelper.VizeNotuGirisiKontrol();
+            _finalKontrol = AkademikTakvimHelper.FinalNotuGirisiKontrol();
+            _butunlemeKontrol = AkademikTakvimHelper.ButunlemeNotuGirisiKontrol();
+
+            // Hiçbir dönem açýk deðilse iþlem yapma
+            if (!_vizeKontrol.Acik && !_finalKontrol.Acik && !_butunlemeKontrol.Acik)
+            {
+                SuccessPanel.Visible = false;
+                ErrorPanel.Visible = true;
+                ErrorText.Text = "<i class='fas fa-calendar-times'></i> Þu anda hiçbir not giriþ dönemi açýk deðil. Not giriþi yapýlamaz.";
+                return;
+            }
+
             string cs = ConfigurationManager.ConnectionStrings["UniversiteDB"].ConnectionString;
             string dersKodu = ddlDersler.SelectedValue;
+            int kaydedilenSayisi = 0;
+            string uyarilar = "";
 
             try
             {
@@ -126,14 +198,75 @@ namespace DersKayitAkademikTakip.Hoca
                         if (!int.TryParse(hfOgrenciId.Value, out ogrenciId))
                             continue;
 
-                        decimal? vize = ParseNullableDecimal(txtVize.Text);
-                        decimal? final = ParseNullableDecimal(txtFinal.Text);
-                        decimal? butunleme = ParseNullableDecimal(txtBut.Text);
+                        // Mevcut notlarý al
+                        decimal? mevcutVize = null;
+                        decimal? mevcutFinal = null;
+                        decimal? mevcutButunleme = null;
 
+                        using (var getCmd = new MySqlCommand("SELECT vize_notu, final_notu, butunleme_notu FROM notlar WHERE ogrenci_id = @ogrenciId AND ders_kodu = @dersKodu", conn))
+                        {
+                            getCmd.Parameters.AddWithValue("@ogrenciId", ogrenciId);
+                            getCmd.Parameters.AddWithValue("@dersKodu", dersKodu);
+                            using (var reader = getCmd.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    mevcutVize = reader.IsDBNull(0) ? (decimal?)null : reader.GetDecimal(0);
+                                    mevcutFinal = reader.IsDBNull(1) ? (decimal?)null : reader.GetDecimal(1);
+                                    mevcutButunleme = reader.IsDBNull(2) ? (decimal?)null : reader.GetDecimal(2);
+                                }
+                            }
+                        }
+
+                        // Formdan gelen deðerler
+                        decimal? yeniVize = ParseNullableDecimal(txtVize.Text);
+                        decimal? yeniFinal = ParseNullableDecimal(txtFinal.Text);
+                        decimal? yeniButunleme = ParseNullableDecimal(txtBut.Text);
+
+                        // Dönem kontrolü ile hangi notlarýn deðiþtirilebileceðini belirle
+                        decimal? kaydedilecekVize = mevcutVize;
+                        decimal? kaydedilecekFinal = mevcutFinal;
+                        decimal? kaydedilecekButunleme = mevcutButunleme;
+
+                        // Vize notu - sadece vize dönemi açýksa deðiþtirilebilir
+                        if (_vizeKontrol.Acik)
+                        {
+                            kaydedilecekVize = yeniVize;
+                        }
+                        else if (yeniVize != mevcutVize && yeniVize.HasValue)
+                        {
+                            // Vize deðiþtirilmeye çalýþýlýyor ama dönem kapalý
+                            if (!uyarilar.Contains("Vize"))
+                                uyarilar += "Vize notu giriþ dönemi kapalý olduðu için vize notlarý güncellenmedi. ";
+                        }
+
+                        // Final notu - sadece final dönemi açýksa deðiþtirilebilir
+                        if (_finalKontrol.Acik)
+                        {
+                            kaydedilecekFinal = yeniFinal;
+                        }
+                        else if (yeniFinal != mevcutFinal && yeniFinal.HasValue)
+                        {
+                            if (!uyarilar.Contains("Final"))
+                                uyarilar += "Final notu giriþ dönemi kapalý olduðu için final notlarý güncellenmedi. ";
+                        }
+
+                        // Bütünleme notu - sadece bütünleme dönemi açýksa deðiþtirilebilir
+                        if (_butunlemeKontrol.Acik)
+                        {
+                            kaydedilecekButunleme = yeniButunleme;
+                        }
+                        else if (yeniButunleme != mevcutButunleme && yeniButunleme.HasValue)
+                        {
+                            if (!uyarilar.Contains("Bütünleme"))
+                                uyarilar += "Bütünleme notu giriþ dönemi kapalý olduðu için bütünleme notlarý güncellenmedi. ";
+                        }
+
+                        // Ortalama ve harf notu hesapla
                         decimal? ortalama;
                         string harfNotu;
                         string durum;
-                        HesaplaNot(vize, final, butunleme, out ortalama, out harfNotu, out durum);
+                        HesaplaNot(kaydedilecekVize, kaydedilecekFinal, kaydedilecekButunleme, out ortalama, out harfNotu, out durum);
 
                         // Önce mevcut kayýt var mý kontrol et
                         int? notId = null;
@@ -160,39 +293,61 @@ namespace DersKayitAkademikTakip.Hoca
                                                                               guncelleme_tarihi = NOW()
                                                                         WHERE not_id = @notId", conn))
                             {
-                                updateCmd.Parameters.AddWithValue("@vize", (object)vize ?? DBNull.Value);
-                                updateCmd.Parameters.AddWithValue("@final", (object)final ?? DBNull.Value);
-                                updateCmd.Parameters.AddWithValue("@but", (object)butunleme ?? DBNull.Value);
+                                updateCmd.Parameters.AddWithValue("@vize", (object)kaydedilecekVize ?? DBNull.Value);
+                                updateCmd.Parameters.AddWithValue("@final", (object)kaydedilecekFinal ?? DBNull.Value);
+                                updateCmd.Parameters.AddWithValue("@but", (object)kaydedilecekButunleme ?? DBNull.Value);
                                 updateCmd.Parameters.AddWithValue("@ortalama", (object)ortalama ?? DBNull.Value);
                                 updateCmd.Parameters.AddWithValue("@harf", (object)harfNotu ?? DBNull.Value);
                                 updateCmd.Parameters.AddWithValue("@durum", (object)durum ?? DBNull.Value);
                                 updateCmd.Parameters.AddWithValue("@notId", notId.Value);
                                 updateCmd.ExecuteNonQuery();
+                                kaydedilenSayisi++;
                             }
                         }
                         else
                         {
-                            using (var insertCmd = new MySqlCommand(@"INSERT INTO notlar
-                                                                            (ogrenci_id, ders_kodu, vize_notu, final_notu, butunleme_notu, ortalama, harf_notu, durum, olusturma_tarihi, guncelleme_tarihi)
-                                                                     VALUES (@ogrenciId, @dersKodu, @vize, @final, @but, @ortalama, @harf, @durum, NOW(), NOW())", conn))
+                            // Sadece en az bir not varsa yeni kayýt oluþtur
+                            if (kaydedilecekVize.HasValue || kaydedilecekFinal.HasValue || kaydedilecekButunleme.HasValue)
                             {
-                                insertCmd.Parameters.AddWithValue("@ogrenciId", ogrenciId);
-                                insertCmd.Parameters.AddWithValue("@dersKodu", dersKodu);
-                                insertCmd.Parameters.AddWithValue("@vize", (object)vize ?? DBNull.Value);
-                                insertCmd.Parameters.AddWithValue("@final", (object)final ?? DBNull.Value);
-                                insertCmd.Parameters.AddWithValue("@but", (object)butunleme ?? DBNull.Value);
-                                insertCmd.Parameters.AddWithValue("@ortalama", (object)ortalama ?? DBNull.Value);
-                                insertCmd.Parameters.AddWithValue("@harf", (object)harfNotu ?? DBNull.Value);
-                                insertCmd.Parameters.AddWithValue("@durum", (object)durum ?? DBNull.Value);
-                                insertCmd.ExecuteNonQuery();
+                                using (var insertCmd = new MySqlCommand(@"INSERT INTO notlar
+                                                                                (ogrenci_id, ders_kodu, vize_notu, final_notu, butunleme_notu, ortalama, harf_notu, durum, olusturma_tarihi, guncelleme_tarihi)
+                                                                         VALUES (@ogrenciId, @dersKodu, @vize, @final, @but, @ortalama, @harf, @durum, NOW(), NOW())", conn))
+                                {
+                                    insertCmd.Parameters.AddWithValue("@ogrenciId", ogrenciId);
+                                    insertCmd.Parameters.AddWithValue("@dersKodu", dersKodu);
+                                    insertCmd.Parameters.AddWithValue("@vize", (object)kaydedilecekVize ?? DBNull.Value);
+                                    insertCmd.Parameters.AddWithValue("@final", (object)kaydedilecekFinal ?? DBNull.Value);
+                                    insertCmd.Parameters.AddWithValue("@but", (object)kaydedilecekButunleme ?? DBNull.Value);
+                                    insertCmd.Parameters.AddWithValue("@ortalama", (object)ortalama ?? DBNull.Value);
+                                    insertCmd.Parameters.AddWithValue("@harf", (object)harfNotu ?? DBNull.Value);
+                                    insertCmd.Parameters.AddWithValue("@durum", (object)durum ?? DBNull.Value);
+                                    insertCmd.ExecuteNonQuery();
+                                    kaydedilenSayisi++;
+                                }
                             }
                         }
                     }
                 }
 
-                SuccessPanel.Visible = true;
-                ErrorPanel.Visible = false;
-                SuccessText.Text = "Notlar kaydedildi.";
+                // Sonuç mesajý
+                if (kaydedilenSayisi > 0)
+                {
+                    SuccessPanel.Visible = true;
+                    ErrorPanel.Visible = false;
+                    SuccessText.Text = $"<i class='fas fa-check-circle'></i> {kaydedilenSayisi} öðrencinin notlarý kaydedildi.";
+                    
+                    if (!string.IsNullOrEmpty(uyarilar))
+                    {
+                        SuccessText.Text += $"<br/><small class='text-warning'><i class='fas fa-exclamation-triangle'></i> {uyarilar}</small>";
+                    }
+                }
+                else
+                {
+                    ErrorPanel.Visible = true;
+                    SuccessPanel.Visible = false;
+                    ErrorText.Text = "Kaydedilecek not bulunamadý. " + uyarilar;
+                }
+
                 OgrencileriYukle();
             }
             catch (Exception ex)

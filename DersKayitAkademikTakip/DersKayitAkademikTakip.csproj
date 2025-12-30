@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -216,6 +216,7 @@
     <Content Include="Account\ResetPasswordConfirmation.aspx" />
     <Content Include="Account\TwoFactorAuthenticationSignIn.aspx" />
     <Content Include="Account\VerifyPhoneNumber.aspx" />
+    <Content Include="Admin\AkademikTakvim.aspx" />
     <Content Include="Admin\Default.aspx" />
     <Content Include="Admin\DersEkle.aspx" />
     <Content Include="Admin\Dersler.aspx" />
@@ -419,6 +420,13 @@
     <Compile Include="Admin\AdminBasePage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Admin\AkademikTakvim.aspx.cs">
+      <DependentUpon>AkademikTakvim.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\AkademikTakvim.aspx.designer.cs">
+      <DependentUpon>AkademikTakvim.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Admin\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -476,6 +484,8 @@
     <Compile Include="Admin\KullanicilarDuzenle.aspx.designer.cs">
       <DependentUpon>KullanicilarDuzenle.aspx</DependentUpon>
     </Compile>
+    <Compile Include="AkademikTakvimHelper.cs" />
+    <Content Include="App_Code\AkademikTakvimHelper.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />

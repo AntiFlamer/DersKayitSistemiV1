@@ -39,7 +39,7 @@
                 <div class="card text-white bg-info mb-3">
                     <div class="card-body">
                         <h5 class="card-title">Aktif Dönem</h5>
-                        <h4 class="card-text">2025-Güz</h4>
+                        <h4 class="card-text" id="aktifDonem" runat="server">-</h4>
                     </div>
                 </div>
             </div>
@@ -59,9 +59,26 @@
                     <a href="Kullanicilar.aspx" class="btn btn-info me-2">
                         <i class="fas fa-users"></i> Kullanıcıları Yönet
                     </a>
-                    <a href="Dersler.aspx" class="btn btn-secondary">
+                    <a href="Dersler.aspx" class="btn btn-secondary me-2">
                         <i class="fas fa-list"></i> Dersleri Yönet
                     </a>
+                    <a href="AkademikTakvim.aspx" class="btn btn-warning">
+                        <i class="fas fa-calendar-alt"></i> Akademik Takvim
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- AKADEMİK TAKVİM DURUM KARTI -->
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header bg-dark text-white">
+                        <i class="fas fa-calendar-check"></i> Akademik Takvim Durumu
+                    </div>
+                    <div class="card-body" id="takvimDurum" runat="server">
+                        <p class="text-muted">Yükleniyor...</p>
+                    </div>
                 </div>
             </div>
         </div>
