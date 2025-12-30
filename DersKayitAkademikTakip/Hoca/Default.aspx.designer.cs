@@ -1,7 +1,5 @@
 namespace DersKayitAkademikTakip.Hoca
 {
-
-
     public partial class Default
     {
         protected global::System.Web.UI.WebControls.Literal litHocaAd;
