@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appSettings>
+  <!-- 
+  =====================================================
+  KURULUM TALIMATLARI:
+  1. Bu dosyayi kopyalayin ve "AppSettings.config" olarak kaydedin
+  2. Asagidaki degerleri kendi bilgilerinizle degistirin
+  =====================================================
+  -->
+  
+  <!-- E-POSTA AYARLARI (SMTP) -->
+  <add key="SmtpHost" value="smtp.gmail.com" />
+  <add key="SmtpPort" value="587" />
+  <add key="SmtpUser" value="YOUR_EMAIL@gmail.com" />
+  <add key="SmtpPass" value="YOUR_GMAIL_APP_PASSWORD" />
+  <add key="SmtpEnableSsl" value="true" />
+  <add key="AdminEmail" value="YOUR_EMAIL@gmail.com" />
+  
+  <!--
+  GMAIL UYGULAMA SIFRESI ALMAK ICIN:
+  1. Google hesabiniza giris yapin
+  2. myaccount.google.com/security adresine gidin
+  3. "2 Adimli Dogrulama" yi aktif edin
+  4. "Uygulama sifreleri" bolumune gidin
+  5. "Diger" secip bir isim verin ve olusturun
+  6. Verilen 16 haneli sifreyi SmtpPass degerine yazin
+  -->
+</appSettings>

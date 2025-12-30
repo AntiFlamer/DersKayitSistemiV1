@@ -286,6 +286,9 @@
     <Content Include="Admin\Web.config" />
     <Content Include="ConnectionStrings.config" />
     <Content Include="ConnectionStrings.sample.config" />
+    <Content Include="AppSettings.config" />
+    <Content Include="AppSettings.config.example" />
+    <Content Include="ConnectionStrings.config.example" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />

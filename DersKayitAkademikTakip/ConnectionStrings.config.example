@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<connectionStrings>
+  <!-- 
+  KURULUM TALIMATLARI:
+  1. Bu dosyayi kopyalayin ve "ConnectionStrings.config" olarak kaydedin
+  2. Asagidaki degerleri kendi veritabani bilgilerinizle degistirin
+  -->
+  
+  <add name="DefaultConnection" 
+       connectionString="Data Source=(LocalDb)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\aspnet-DersKayitAkademikTakip.mdf;Initial Catalog=aspnet-DersKayitAkademikTakip;Integrated Security=True" 
+       providerName="System.Data.SqlClient" />
+  
+  <add name="UniversiteDB"
+       connectionString="Server=localhost;Port=3306;Database=UniversiteDersKayitSistemi;Uid=root;Pwd=YOUR_PASSWORD;SslMode=None;AllowPublicKeyRetrieval=True;Character Set=utf8;Connection Timeout=15;"
+       providerName="MySql.Data.MySqlClient" />
+</connectionStrings>
