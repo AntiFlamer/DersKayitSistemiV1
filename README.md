@@ -341,23 +341,29 @@ VALUES ('12345678903', 'Mehmet', 'Demir', 'mehmet.demir@universite.edu.tr', 'ogr
 
 Aþaðýda projenin çeþitli bölümlerine ait ekran görüntüleri yer almaktadýr:
 
-### 1. Giriþ Sayfasý
-![Login](docs/screenshots/01-login.png)
+### 1. Ana Sayfa
+![Ana Sayfa](docs/screenshots/anasayfa.png)
 
-### 2. Admin Dashboard
-![Admin Dashboard](docs/screenshots/02-admin-dashboard.png)
+### 2. Giriþ Sayfasý
+![Giriþ Sayfasý](docs/screenshots/giris_sayfasi.png)
 
-### 3. Hoca Dashboard
-![Hoca Dashboard](docs/screenshots/03-hoca-dashboard.png)
+### 3. Admin Panel
+![Admin Panel](docs/screenshots/admin_panel.png)
 
-### 4. Ogrenci Dashboard
-![Ogrenci Dashboard](docs/screenshots/04-ogrenci-dashboard.png)
+### 4. Akademik Takvim
+![Akademik Takvim](docs/screenshots/akademiktakvim.png)
 
-### 5. Ders Kaydý
-![Ders Kaydý](docs/screenshots/05-ders-kaydi.png)
+### 5. Hoca Panel
+![Hoca Panel](docs/screenshots/hoca_panel.png)
 
-### 6. Not Giriþi
-![Not Giriþi](docs/screenshots/06-not-girisi.png)
+### 6. Öðrenci Panel
+![Öðrenci Panel](docs/screenshots/ogrenci_panel.png)
+
+### 7. Hakkýnda
+![Hakkýnda](docs/screenshots/hakkinda.png)
+
+### 8. Ýletiþim
+![Ýletiþim](docs/screenshots/iletisim.png)
 
 ---
 
