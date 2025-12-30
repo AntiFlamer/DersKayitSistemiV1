@@ -285,7 +285,6 @@
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="Admin\Web.config" />
     <Content Include="ConnectionStrings.config" />
-    <Content Include="ConnectionStrings.sample.config" />
     <Content Include="AppSettings.config" />
     <Content Include="AppSettings.config.example" />
     <Content Include="ConnectionStrings.config.example" />
