@@ -1,4 +1,4 @@
-# Universite Ders Kayit ve Akademik Takip Sistemi
+# Üniversite Ders Kayýt ve Akademik Takip Sistemi
 
 <p align="center">
   <img alt=".NET Framework" src="https://img.shields.io/badge/.NET%20Framework-4.8-5C2D91?logo=.net&logoColor=white" />
@@ -12,189 +12,189 @@
 </p>
 
 <p align="center">
-  <strong>Rol tabanli (Admin / Ogretim Gorevlisi / Ogrenci) yetkilendirme ile kullanici, ders ve kayit yonetimi yapan kapsamli bir ASP.NET Web Forms uygulamasi.</strong>
+  <strong>Rol tabanlý (Admin / Öðretim Görevlisi / Öðrenci) yetkilendirme ile kullanýcý, ders ve kayýt yönetimi yapan kapsamlý bir ASP.NET Web Forms uygulamasý.</strong>
 </p>
 
 ---
 
-## Icindekiler
+## Ýçindekiler
 
-- [Ozellikler](#ozellikler)
-- [Teknoloji Yigini](#teknoloji-yigini)
-- [Proje Yapisi](#proje-yapisi)
+- [Özellikler](#özellikler)
+- [Teknoloji Yýðýný](#teknoloji-yýðýný)
+- [Proje Yapýsý](#proje-yapýsý)
 - [Kurulum](#kurulum)
-- [Veritabani Semasi](#veritabani-semasi)
-- [Kullanim](#kullanim)
-- [Ekran Goruntuleri](#ekran-goruntuleri)
-- [Gelistirme Notlari](#gelistirme-notlari)
-- [Katki](#katki)
+- [Veritabaný Þemasý](#veritabaný-þemasý)
+- [Kullaným](#kullaným)
+- [Ekran Görüntüleri](#ekran-görüntüleri)
+- [Geliþtirme Notlarý](#geliþtirme-notlarý)
+- [Katký](#katký)
 - [Lisans](#lisans)
 
 ---
 
-## Ozellikler
+## Özellikler
 
-### Kimlik Dogrulama ve Yetkilendirme
-- Oturum (Session) tabanli kimlik dogrulama
-- E-posta veya kullanici numarasi ile giris
-- Rol bazli sayfa erisim kontrolu
-- Otomatik yonlendirme (rol bazli dashboard)
+### Kimlik Doðrulama ve Yetkilendirme
+- Oturum (Session) tabanlý kimlik doðrulama
+- E-posta veya kullanýcý numarasý ile giriþ
+- Rol bazlý sayfa eriþim kontrolü
+- Otomatik yönlendirme (rol bazlý dashboard)
 
-### Kullanici Rolleri
+### Kullanýcý Rolleri
 
 | Rol | Yetkiler |
 |-----|----------|
-| **Admin** | Tam sistem yonetimi, kullanici ve ders CRUD islemleri |
-| **Ogretim Gorevlisi (Hoca)** | Ders kayit onayi, not girisi, ders istatistikleri |
-| **Ogrenci** | Ders kaydi, kayitli dersleri goruntuleme, not takibi |
+| **Admin** | Tam sistem yönetimi, kullanýcý ve ders CRUD iþlemleri |
+| **Öðretim Görevlisi (Hoca)** | Ders kayýt onayý, not giriþi, ders istatistikleri |
+| **Öðrenci** | Ders kaydý, kayýtlý dersleri görüntüleme, not takibi |
 
 ### Admin Paneli
-- **Kullanici Yonetimi**
-  - Kullanici listeleme, arama ve filtreleme
-  - Yeni kullanici ekleme (otomatik kullanici numarasi uretimi)
-  - Kullanici duzenleme ve silme
-  - Aktif/Pasif durum yonetimi
-- **Ders Yonetimi**
+- **Kullanýcý Yönetimi**
+  - Kullanýcý listeleme, arama ve filtreleme
+  - Yeni kullanýcý ekleme (otomatik kullanýcý numarasý üretimi)
+  - Kullanýcý düzenleme ve silme
+  - Aktif/Pasif durum yönetimi
+- **Ders Yönetimi**
   - Ders listeleme, arama ve filtreleme
   - Yeni ders ekleme
-  - Ders duzenleme ve silme
-  - Ogretim gorevlisi atama
+  - Ders düzenleme ve silme
+  - Öðretim görevlisi atama
 - **Akademik Takvim**
-  - Akademik donem kaynakli tarih araliklarini merkezi olarak yonetme
-  - Aktif donem tanimlama (tek aktif kayit)
-  - Admin dashboard uzerinden surec durumlarini (ders kayit / not girisi) gosterme
+  - Akademik dönem kaynaklý tarih aralýklarýný merkezi olarak yönetme
+  - Aktif dönem tanýmlama (tek aktif kayýt)
+  - Admin dashboard üzerinden süreç durumlarýný (ders kayýt / not giriþi) gösterme
 - **Dashboard**
-  - Toplam kullanici, ders ve kayit istatistikleri
-  - Rol bazli kullanici dagilimi
+  - Toplam kullanýcý, ders ve kayýt istatistikleri
+  - Rol bazlý kullanýcý daðýlýmý
 
-### Ogretim Gorevlisi Paneli
-- **Ders Istatistikleri**
+### Öðretim Görevlisi Paneli
+- **Ders Ýstatistikleri**
   - Verilen derslerin listesi
-  - Kayitli ogrenci sayilari
+  - Kayýtlý öðrenci sayýlarý
   - Kontenjan durumu
-- **Kayit Onay**
-  - Bekleyen ders kayitlarini goruntuleme
-  - Kayit onaylama/reddetme
-- **Not Girisi**
-  - Vize, Final, Butunleme not girisi
-  - Ogrenci bazli not guncelleme
+- **Kayýt Onay**
+  - Bekleyen ders kayýtlarýný görüntüleme
+  - Kayýt onaylama/reddetme
+- **Not Giriþi**
+  - Vize, Final, Bütünleme not giriþi
+  - Öðrenci bazlý not güncelleme
 
-### Ogrenci Paneli
-- **Ders Kaydi**
-  - Acik dersleri goruntuleme
-  - Kontenjan kontrolu ile ders kaydi
-  - Kayit durumu takibi (Beklemede/Onayli/Reddedildi)
-- **Kayitli Derslerim**
-  - Kayitli derslerin listesi
-  - Ders detaylari ve ogretim gorevlisi bilgisi
-- **Notlarim**
-  - Vize, Final, Butunleme notlari
-  - Genel Not Ortalamasi (GNO)
+### Öðrenci Paneli
+- **Ders Kaydý**
+  - Açýk dersleri görüntüleme
+  - Kontenjan kontrolü ile ders kaydý
+  - Kayýt durumu takibi (Beklemede/Onaylý/Reddedildi)
+- **Kayýtlý Derslerim**
+  - Kayýtlý derslerin listesi
+  - Ders detaylarý ve öðretim görevlisi bilgisi
+- **Notlarým**
+  - Vize, Final, Bütünleme notlarý
+  - Genel Not Ortalamasý (GNO)
 
-### Arayuz
-- Bootstrap 5 ile modern ve responsive tasarim
-- Font Awesome 6.5 ikonlari
+### Arayüz
+- Bootstrap 5 ile modern ve responsive tasarým
+- Font Awesome 6.5 ikonlarý
 - Animasyonlu kart ve buton efektleri
 - Mobil uyumlu navbar ve layout
 
 ---
 
-## Teknoloji Yigini
+## Teknoloji Yýðýný
 
 | Kategori | Teknoloji |
 |----------|-----------|
 | **Backend** | .NET Framework 4.8, ASP.NET Web Forms, C# 7.3 |
-| **Veritabani** | MySQL 8.x (MySql.Data Connector) |
+| **Veritabaný** | MySQL 8.x (MySql.Data Connector) |
 | **Frontend** | Bootstrap 5, jQuery 3.7, Font Awesome 6.5 |
-| **Guvenlik** | Session tabanli auth, Parametreli sorgular, Anti-XSRF |
+| **Güvenlik** | Session tabanlý auth, Parametreli sorgular, Anti-XSRF |
 
 ---
 
-## Proje Yapisi
+## Proje Yapýsý
 
 ```
 DersKayitAkademikTakip/
 |-- Account/
-|   |-- Login.aspx(.cs)                # Giris sayfasi
-|   +-- Logout.aspx(.cs)               # Cikis islemi
+|   |-- Login.aspx(.cs)                # Giriþ sayfasý
+|   +-- Logout.aspx(.cs)               # Çýkýþ iþlemi
 |
 |-- Admin/
 |   |-- Default.aspx(.cs)              # Admin dashboard
 |   |-- AkademikTakvim.aspx(.cs)       # Akademik takvim CRUD
-|   |-- Kullanicilar.aspx(.cs)         # Kullanici listesi
-|   |-- KullaniciEkle.aspx(.cs)        # Yeni kullanici ekleme
-|   |-- KullanicilarDuzenle.aspx(.cs)  # Kullanici duzenleme
+|   |-- Kullanicilar.aspx(.cs)         # Kullanýcý listesi
+|   |-- KullaniciEkle.aspx(.cs)        # Yeni kullanýcý ekleme
+|   |-- KullanicilarDuzenle.aspx(.cs)  # Kullanýcý düzenleme
 |   |-- Dersler.aspx(.cs)              # Ders listesi
 |   |-- DersEkle.aspx(.cs)             # Yeni ders ekleme
-|   |-- DerslerDuzenle.aspx(.cs)       # Ders duzenleme
+|   |-- DerslerDuzenle.aspx(.cs)       # Ders düzenleme
 |   |-- AdminBasePage.cs               # Admin sayfa base class
-|   +-- Web.config                     # Admin klasor ayarlari
+|   +-- Web.config                     # Admin klasör ayarlarý
 |
 |-- Hoca/
 |   |-- Default.aspx(.cs)              # Hoca dashboard
 |   |-- DersIstatistik.aspx(.cs)       # Ders istatistikleri
-|   |-- KayitOnay.aspx(.cs)            # Kayit onaylama
-|   |-- NotGirisi.aspx(.cs)            # Not girisi
+|   |-- KayitOnay.aspx(.cs)            # Kayýt onaylama
+|   |-- NotGirisi.aspx(.cs)            # Not giriþi
 |   +-- HocaBasePage.cs                # Hoca sayfa base class
 |
 |-- Ogrenci/
-|   |-- Default.aspx(.cs)              # Ogrenci dashboard
-|   |-- DersKayit.aspx(.cs)            # Ders kaydi
-|   |-- Derslerim.aspx(.cs)            # Kayitli dersler
-|   +-- Notlarim.aspx(.cs)             # Not goruntuleme
+|   |-- Default.aspx(.cs)              # Öðrenci dashboard
+|   |-- DersKayit.aspx(.cs)            # Ders kaydý
+|   |-- Derslerim.aspx(.cs)            # Kayýtlý dersler
+|   +-- Notlarim.aspx(.cs)             # Not görüntüleme
 |
 |-- App_Code/
 |   |-- AkademikTakvimHelper.cs         # Akademik takvim kontrolleri ve model
-|   +-- CustomRoleProvider.cs           # Ozel rol saglayici
+|   +-- CustomRoleProvider.cs           # Özel rol saðlayýcý
 |
 |-- App_Start/
 |   |-- BundleConfig.cs                 # Script/CSS bundle
 |   |-- RouteConfig.cs                  # URL routing
-|   +-- IdentityConfig.cs               # Identity ayarlari
+|   +-- IdentityConfig.cs               # Identity ayarlarý
 |
 |-- Content/
 |   |-- bootstrap.min.css               # Bootstrap stilleri
-|   +-- Site.css                        # Ozel stiller
+|   +-- Site.css                        # Özel stiller
 |
 |-- Scripts/
 |   |-- jquery-3.7.1.min.js             # jQuery
 |   +-- bootstrap.bundle.min.js         # Bootstrap JS
 |
-|-- AkademikTakvimGoruntule.aspx(.cs)   # Aktif akademik takvim goruntuleme
+|-- AkademikTakvimGoruntule.aspx(.cs)   # Aktif akademik takvim görüntüleme
 |-- Default.aspx(.cs)                   # Ana sayfa
-|-- About.aspx(.cs)                     # Hakkinda sayfasi
-|-- Contact.aspx(.cs)                   # Iletisim sayfasi
-|-- Site.Master(.cs)                    # Ana sablon
-|-- Web.config                          # Ana konfigurasyon
-|-- ConnectionStrings.config            # DB baglanti bilgileri
-+-- Global.asax(.cs)                    # Uygulama yasam dongusu
+|-- About.aspx(.cs)                     # Hakkýnda sayfasý
+|-- Contact.aspx(.cs)                   # Ýletiþim sayfasý
+|-- Site.Master(.cs)                    # Ana þablon
+|-- Web.config                          # Ana konfigürasyon
+|-- ConnectionStrings.config            # DB baðlantý bilgileri
++-- Global.asax(.cs)                    # Uygulama yaþam döngüsü
 ```
 
 ---
 
 ## Kurulum
 
-### Onkosullar
+### Önkoþullar
 - Windows 10/11
 - Visual Studio 2019/2022
 - .NET Framework 4.8 Developer Pack
 - MySQL Server 8.x
 - MySQL Connector/NET
 
-### Adimlar
+### Adýmlar
 
-1. **Depoyu klonlayin**
+1. **Depoyu klonlayýn**
    ```bash
    git clone https://github.com/AntiFlamer/DersKayitSistemiV1.git
    cd DersKayitSistemiV1
    ```
 
-2. **Visual Studio ile acin**
-   - `DersKayitAkademikTakip.sln` dosyasini acin
+2. **Visual Studio ile açýn**
+   - `DersKayitAkademikTakip.sln` dosyasýný açýn
 
-3. **Veritabani baglantisini ayarlayin**
+3. **Veritabaný baðlantýsýný ayarlayýn**
 
-   `ConnectionStrings.config` dosyasini duzenleyin:
+   `ConnectionStrings.config` dosyasýný düzenleyin:
    ```xml
    <connectionStrings>
      <add name="UniversiteDB"
@@ -203,16 +203,16 @@ DersKayitAkademikTakip/
    </connectionStrings>
    ```
 
-4. **Veritabani tablolarini olusturun** (asagidaki semaya bakin)
+4. **Veritabaný tablolarýný oluþturun** (aþaðýdaki þemaya bakýn)
 
-5. **Projeyi calistirin**
-   - `F5` veya `Ctrl+F5` ile baslatin
+5. **Projeyi çalýþtýrýn**
+   - `F5` veya `Ctrl+F5` ile baþlatýn
 
 ---
 
-## Veritabani Semasi
+## Veritabaný Þemasý
 
-### Kullanicilar Tablosu
+### Kullanýcýlar Tablosu
 ```sql
 CREATE TABLE Kullanicilar (
     kullanici_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -245,7 +245,7 @@ CREATE TABLE Dersler (
 );
 ```
 
-### Kayitlar Tablosu
+### Kayýtlar Tablosu
 ```sql
 CREATE TABLE Kayitlar (
     kayit_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -293,51 +293,51 @@ CREATE TABLE akademiktakvim (
 );
 ```
 
-### Ornek Veriler
+### Örnek Veriler
 ```sql
--- Admin kullanici
+-- Admin kullanýcý
 INSERT INTO Kullanicilar (tc_kimlik, ad, soyad, email, sifre, rol, kullanici_no)
 VALUES ('12345678901', 'Admin', 'User', 'admin@universite.edu.tr', 'admin123', 'admin', '25000001');
 
--- Ogretim Gorevlisi
+-- Öðretim Görevlisi
 INSERT INTO Kullanicilar (tc_kimlik, ad, soyad, email, sifre, rol, kullanici_no)
-VALUES ('12345678902', 'Ahmet', 'Yilmaz', 'ahmet.yilmaz@universite.edu.tr', 'hoca123', 'hoca', '25100001');
+VALUES ('12345678902', 'Ahmet', 'Yýlmaz', 'ahmet.yilmaz@universite.edu.tr', 'hoca123', 'hoca', '25100001');
 
--- Ogrenci
+-- Öðrenci
 INSERT INTO Kullanicilar (tc_kimlik, ad, soyad, email, sifre, rol, kullanici_no)
 VALUES ('12345678903', 'Mehmet', 'Demir', 'mehmet.demir@universite.edu.tr', 'ogrenci123', 'ogrenci', '25200001');
 ```
 
 ---
 
-## Kullanim
+## Kullaným
 
-### Giris Yapma
-1. `/Account/Login.aspx` sayfasina gidin
-2. E-posta veya kullanici numarasi ile giris yapin
-3. Rol bazli otomatik yonlendirme:
+### Giriþ Yapma
+1. `/Account/Login.aspx` sayfasýna gidin
+2. E-posta veya kullanýcý numarasý ile giriþ yapýn
+3. Rol bazlý otomatik yönlendirme:
    - **Admin** -> `/Admin/Default.aspx`
    - **Hoca** -> `/Hoca/Default.aspx`
-   - **Ogrenci** -> `/Ogrenci/Default.aspx`
+   - **Öðrenci** -> `/Ogrenci/Default.aspx`
 
-### Admin Islemleri
-- **Kullanici Ekle**: Admin Panel -> Kullanici Ekle
-- **Kullanici Duzenle**: Kullanicilar -> Duzenle butonu
+### Admin Ýþlemleri
+- **Kullanýcý Ekle**: Admin Panel -> Kullanýcý Ekle
+- **Kullanýcý Düzenle**: Kullanýcýlar -> Düzenle butonu
 - **Ders Ekle**: Admin Panel -> Ders Ekle
-- **Ders Duzenle**: Dersler -> Duzenle butonu
+- **Ders Düzenle**: Dersler -> Düzenle butonu
 - **Akademik Takvim**: Admin Panel -> Akademik Takvim
 
-### Ogretim Gorevlisi Islemleri
-- **Kayit Onaylama**: Hoca Panel -> Kayit Onay
-- **Not Girisi**: Hoca Panel -> Not Girisi
+### Öðretim Görevlisi Ýþlemleri
+- **Kayýt Onaylama**: Hoca Panel -> Kayýt Onay
+- **Not Giriþi**: Hoca Panel -> Not Giriþi
 
-### Ogrenci Islemleri
-- **Ders Kaydi**: Ogrenci Panel -> Yeni Ders Kaydi
-- **Notlari Goruntuleme**: Ogrenci Panel -> Notlarim
+### Öðrenci Ýþlemleri
+- **Ders Kaydý**: Öðrenci Panel -> Yeni Ders Kaydý
+- **Notlarý Görüntüleme**: Öðrenci Panel -> Notlarým
 
 ---
 
-## Ekran Goruntuleri
+## Ekran Görüntüleri
 
 Aþaðýda projenin çeþitli bölümlerine ait ekran görüntüleri yer almaktadýr:
 
@@ -367,50 +367,50 @@ Aþaðýda projenin çeþitli bölümlerine ait ekran görüntüleri yer almaktadýr:
 
 ---
 
-## Gelistirme Notlari
+## Geliþtirme Notlarý
 
-### Guvenlik
-- Tum veritabani sorgulari **parametreli** (`AddWithValue`) - SQL Injection korumasi
-- Session tabanli kimlik dogrulama
-- Rol bazli sayfa erisim kontrolu (`AdminBasePage`, `HocaBasePage`)
-- Anti-XSRF token destegi (`Site.Master`)
+### Güvenlik
+- Tüm veritabaný sorgularý **parametreli** (`AddWithValue`) - SQL Injection korumasý
+- Session tabanlý kimlik doðrulama
+- Rol bazlý sayfa eriþim kontrolü (`AdminBasePage`, `HocaBasePage`)
+- Anti-XSRF token desteði (`Site.Master`)
 
 ### Mimari
-- **BasePage Pattern**: Admin ve Hoca sayfalari icin ozel base class'lar
+- **BasePage Pattern**: Admin ve Hoca sayfalarý için özel base class'lar
 - **Master Page**: Ortak layout ve navbar (`Site.Master`)
-- **Ayri Duzenleme Sayfalari**: Modal yerine dedicated edit sayfalari (daha stabil)
+- **Ayrý Düzenleme Sayfalarý**: Modal yerine dedicated edit sayfalarý (daha stabil)
 
-### URL Cozumleme
-- `ResolveUrl("~/")` kullanimi - sanal dizin altinda dogru calisir
+### URL Çözümleme
+- `ResolveUrl("~/")` kullanýmý - sanal dizin altýnda doðru çalýþýr
 - `runat="server"` ile dinamik URL'ler
 
 ### Stil ve Script
-- Bundle yapilandirmasi (`BundleConfig.cs`)
-- CDN uzerinden Font Awesome
-- Ozel stiller `Site.css` icinde
+- Bundle yapýlandýrmasý (`BundleConfig.cs`)
+- CDN üzerinden Font Awesome
+- Özel stiller `Site.css` içinde
 
 ---
 
-## Katki
+## Katký
 
 1. Bu depoyu fork edin
-2. Feature branch olusturun (`git checkout -b feature/YeniOzellik`)
-3. Degisikliklerinizi commit edin (`git commit -m 'Yeni ozellik eklendi'`)
+2. Feature branch oluþturun (`git checkout -b feature/YeniOzellik`)
+3. Deðiþikliklerinizi commit edin (`git commit -m 'Yeni özellik eklendi'`)
 4. Branch'e push edin (`git push origin feature/YeniOzellik`)
-5. Pull Request acin
+5. Pull Request açýn
 
 ---
 
 ## Lisans
 
-Bu proje egitim amacli gelistirilmistir. Kullanim kosullari icin repo sahibiyle iletisime gecin.
+Bu proje eðitim amaçlý geliþtirilmiþtir. Kullaným koþullarý için repo sahibiyle iletiþime geçin.
 
 ---
 
 <p align="center">
-  <strong>Gelistirici:</strong> <a href="https://github.com/AntiFlamer">AntiFlamer</a>
+  <strong>Geliþtirici:</strong> <a href="https://github.com/AntiFlamer">AntiFlamer</a>
 </p>
 
 <p align="center">
-  Bu projeyi begendiyseniz yildiz vermeyi unutmayin!
+  ? Bu projeyi beðendiyseniz yýldýz vermeyi unutmayýn! ?
 </p>
