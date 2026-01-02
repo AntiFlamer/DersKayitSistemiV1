@@ -91,6 +91,17 @@
   - Vize, Final, Bütünleme notlarý
   - Genel Not Ortalamasý (GNO)
 
+### Ýletiþim Formu (SMTP E-posta Gönderimi)
+- **SMTP Protokolü ile E-posta Gönderimi**
+  - Web.config üzerinden yapýlandýrýlabilir SMTP ayarlarý
+  - Gmail, Outlook veya özel SMTP sunucu desteði
+  - SSL/TLS þifreli güvenli baðlantý
+  - HTML formatýnda profesyonel e-posta þablonu
+  - Otomatik Reply-To adresi ayarlama
+  - Konu kategorisi seçimi (Genel Bilgi, Teknik Destek, Öneri/Þikayet, Diðer)
+  - Form doðrulama (Ad Soyad, E-posta, Mesaj)
+  - Baþarý/Hata mesajlarý ile kullanýcý geri bildirimi
+
 ### Arayüz
 - Bootstrap 5 ile modern ve responsive tasarým
 - Font Awesome 6.5 ikonlarý
@@ -106,6 +117,7 @@
 | **Backend** | .NET Framework 4.8, ASP.NET Web Forms, C# 7.3 |
 | **Veritabaný** | MySQL 8.x (MySql.Data Connector) |
 | **Frontend** | Bootstrap 5, jQuery 3.7, Font Awesome 6.5 |
+| **E-posta** | SMTP Protokolü (System.Net.Mail) |
 | **Güvenlik** | Session tabanlý auth, Parametreli sorgular, Anti-XSRF |
 
 ---
@@ -163,7 +175,7 @@ DersKayitAkademikTakip/
 |-- AkademikTakvimGoruntule.aspx(.cs)   # Aktif akademik takvim görüntüleme
 |-- Default.aspx(.cs)                   # Ana sayfa
 |-- About.aspx(.cs)                     # Hakkýnda sayfasý
-|-- Contact.aspx(.cs)                   # Ýletiþim sayfasý
+|-- Contact.aspx(.cs)                   # Ýletiþim sayfasý (SMTP e-posta)
 |-- Site.Master(.cs)                    # Ana þablon
 |-- Web.config                          # Ana konfigürasyon
 |-- ConnectionStrings.config            # DB baðlantý bilgileri
@@ -203,9 +215,26 @@ DersKayitAkademikTakip/
    </connectionStrings>
    ```
 
-4. **Veritabaný tablolarýný oluþturun** (aþaðýdaki þemaya bakýn)
+4. **SMTP Ayarlarýný Yapýlandýrýn**
 
-5. **Projeyi çalýþtýrýn**
+   `Web.config` dosyasýna aþaðýdaki SMTP ayarlarýný ekleyin:
+   ```xml
+   <appSettings>
+     <!-- SMTP E-posta Ayarlarý -->
+     <add key="SmtpHost" value="smtp.gmail.com" />
+     <add key="SmtpPort" value="587" />
+     <add key="SmtpUser" value="your-email@gmail.com" />
+     <add key="SmtpPass" value="your-app-password" />
+     <add key="SmtpEnableSsl" value="true" />
+     <add key="AdminEmail" value="admin@universite.edu.tr" />
+   </appSettings>
+   ```
+
+   > **Not:** Gmail kullanýyorsanýz, "Uygulama Þifreleri" oluþturmanýz gerekir. Google Hesabý -> Güvenlik -> 2 Adýmlý Doðrulama -> Uygulama Þifreleri bölümünden oluþturabilirsiniz.
+
+5. **Veritabaný tablolarýný oluþturun** (aþaðýdaki þemaya bakýn)
+
+6. **Projeyi çalýþtýrýn**
    - `F5` veya `Ctrl+F5` ile baþlatýn
 
 ---
@@ -293,6 +322,22 @@ CREATE TABLE akademiktakvim (
 );
 ```
 
+### Notlar Tablosu
+```sql
+CREATE TABLE Notlar (
+    not_id INT AUTO_INCREMENT PRIMARY KEY,
+    kayit_id INT NOT NULL,
+    not_tipi ENUM('vize', 'final', 'butunleme') NOT NULL,
+    puan DECIMAL(5,2) NOT NULL,
+    giris_tarihi DATETIME DEFAULT CURRENT_TIMESTAMP,
+    giren_hoca_id INT NOT NULL,
+    guncelleme_tarihi DATETIME NULL ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (kayit_id) REFERENCES Kayitlar(kayit_id) ON DELETE CASCADE,
+    FOREIGN KEY (giren_hoca_id) REFERENCES Kullanicilar(kullanici_id),
+    UNIQUE KEY unique_kayit_not_tipi (kayit_id, not_tipi)
+);
+```
+
 ### Örnek Veriler
 ```sql
 -- Admin kullanýcý
@@ -335,6 +380,13 @@ VALUES ('12345678903', 'Mehmet', 'Demir', 'mehmet.demir@universite.edu.tr', 'ogr
 - **Ders Kaydý**: Öðrenci Panel -> Yeni Ders Kaydý
 - **Notlarý Görüntüleme**: Öðrenci Panel -> Notlarým
 
+### Ýletiþim Formu Kullanýmý
+1. `/Contact.aspx` sayfasýna gidin
+2. Ad Soyad, E-posta adresinizi girin
+3. Konu kategorisi seçin (Genel Bilgi, Teknik Destek, vb.)
+4. Mesajýnýzý yazýn ve "Gönder" butonuna týklayýn
+5. Mesajýnýz SMTP üzerinden yönetici e-postasýna iletilecektir
+
 ---
 
 ## Ekran Görüntüleri
@@ -374,6 +426,13 @@ Aþaðýda projenin çeþitli bölümlerine ait ekran görüntüleri yer almaktadýr:
 - Session tabanlý kimlik doðrulama
 - Rol bazlý sayfa eriþim kontrolü (`AdminBasePage`, `HocaBasePage`)
 - Anti-XSRF token desteði (`Site.Master`)
+
+### E-posta Gönderimi
+- **SMTP Protokolü**: `System.Net.Mail` namespace'i kullanýlarak e-posta gönderimi
+- **Yapýlandýrma**: Tüm SMTP ayarlarý `Web.config` dosyasýndan okunur
+- **Güvenlik**: SSL/TLS þifrelemesi ile güvenli baðlantý
+- **HTML Þablon**: Profesyonel görünümlü HTML formatýnda e-posta içeriði
+- **Hata Yönetimi**: Try-catch bloklarý ile hata yakalama ve kullanýcý bildirimi
 
 ### Mimari
 - **BasePage Pattern**: Admin ve Hoca sayfalarý için özel base class'lar
