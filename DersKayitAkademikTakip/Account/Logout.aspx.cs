@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Web;
 using System.Web.UI;
 
 namespace DersKayitAkademikTakip.Account
@@ -19,12 +18,6 @@ namespace DersKayitAkademikTakip.Account
             // Session'ı temizle
             Session.Clear();
             Session.Abandon();
-
-            // Cookie'leri temizle (varsa)
-            if (Request.Cookies["KullaniciBilgi"] != null)
-            {
-                Response.Cookies["KullaniciBilgi"].Expires = DateTime.Now.AddDays(-1);
-            }
 
             // Ana sayfaya yönlendir
             Response.Redirect("~/Default.aspx");
